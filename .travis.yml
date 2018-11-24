@@ -1,0 +1,67 @@
+language: cpp
+
+git:
+  depth: false
+
+sudo: required
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - BUILD_NAME=GCC-5
+        - MATRIX_EVAL="export CC=gcc-5 && export CXX=g++-5"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - BUILD_NAME=GCC-6
+        - MATRIX_EVAL="export CC=gcc-6 && export CXX=g++-6"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - BUILD_NAME=GCC-7
+        - MATRIX_EVAL="export CC=gcc-7 && export CXX=g++-7"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - BUILD_NAME=GCC-8
+        - MATRIX_EVAL="export CC=gcc-8 && export CXX=g++-8"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+  - if [[ $CC == gcc* ]]; then sudo update-alternatives --install $(which gcc) gcc $(which $CC) 100; sudo update-alternatives --install $(which g++) g++ $(which $CXX) 100; fi
+  - if [[ $CC == clang* ]]; then sudo update-alternatives --install $(which clang) clang $(which $CC) 100; sudo update-alternatives --install $(which clang++) clang++ $(which $CXX) 100; fi  
+  - $CC --version
+  - $CXX --version
+
+install:
+  - ./gradlew --console=plain
+
+script:
+  - ./gradlew --console=plain assemble
+  - ./gradlew --console=plain check
+
+after_failure:
+  - shopt -s nullglob
+  - tail -n+1 {.,lib}/build/tmp/*{Library,Executable,GoogleTestExe}*/*.txt 
