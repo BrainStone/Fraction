@@ -16,6 +16,8 @@ buildscript {
 
 // Project-Type
 apply plugin: "cpp"
+// Test Suite
+apply plugin: "google-test"
 // IDEs
 apply plugin: "visual-studio"
 
@@ -97,6 +99,16 @@ model {
                 if (toolChain in VisualCpp) {
                     cppCompiler.args "/O2"
                 }
+            }
+        }
+        withType(GoogleTestTestSuiteBinarySpec) {
+            lib project: ":lib", library: "googleTest", linkage: "static"
+
+            cppCompiler.define "GOOGLE_TEST"
+
+            if (targetPlatform.operatingSystem.linux) {
+                cppCompiler.args "-pthread"
+                linker.args "-pthread"
             }
         }
     }
