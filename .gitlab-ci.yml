@@ -23,7 +23,7 @@ test:
   when: on_success
   artifacts:
     reports:
-      junit: build/*/*/gtestresults.xml
+      junit: build/test-results/*/*/gtestresults.xml
 
 clean:
   stage: clean
