@@ -13,26 +13,6 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
-      env:
-        - BUILD_NAME=GCC-5
-        - MATRIX_EVAL="export CC=gcc-5 && export CXX=g++-5"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-      env:
-        - BUILD_NAME=GCC-6
-        - MATRIX_EVAL="export CC=gcc-6 && export CXX=g++-6"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
             - g++-7
       env:
         - BUILD_NAME=GCC-7
