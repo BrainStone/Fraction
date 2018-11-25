@@ -90,8 +90,8 @@ TEST( TEST_CASE_NAME, reductionEquals ) {
 
 TEST( TEST_CASE_NAME, floatingPointConstructor ) {
 	constexpr fraction_t val1 { 2.0 };
-	const fraction_t val2 { -0.588652482269503546099290780141843971 };
-	const fraction_t val3 { -0.007863705664601882118635943332333412 };
+	constexpr fraction_t val2 { -0.588652482269503546099290780141843971 };
+	constexpr fraction_t val3 { -0.007863705664601882118635943332333412 };
 	constexpr fraction_t val4 { 0.0 };
 
 	constexpr fraction_t val1Expected { 2, 1 };
