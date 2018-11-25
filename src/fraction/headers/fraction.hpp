@@ -9,15 +9,16 @@
 
 template<
 	class T = int64_t,
-	class = std::enable_if_t<std::is_integral_v<T>>
+	class = typename std::enable_if<std::is_integral<T>::value>::type
 >
 class fraction {
 private:
 	// Flags
-	static constexpr bool IS_SIGNED { std::is_signed_v<T> };
+	static constexpr bool IS_SIGNED { std::is_signed<T>::value };
 
 	// Constants
 	static constexpr T ZERO { 0 };
+	static constexpr T ONE { 1 };
 
 	// Fields
 	T numerator;
@@ -25,12 +26,12 @@ private:
 
 public:
 	// Fraction Contrsuctor
-	constexpr fraction( T numerator, T denominator = 1 );
+	constexpr fraction( T numerator, T denominator = ONE );
 
 	// Floating Point constructor
 	template<
 		class D,
-		class = std::enable_if_t<std::is_floating_point_v<D>>
+		class = typename std::enable_if<std::is_floating_point<D>::value>::type
 	>
 	constexpr fraction( D value );
 
