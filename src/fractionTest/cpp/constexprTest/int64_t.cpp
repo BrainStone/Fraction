@@ -14,6 +14,35 @@ TEST( TEST_CASE_NAME, zeroExcpetion ) {
 	EXPECT_THROW( fraction_t( 0, 0 ), std::invalid_argument );
 }
 
+TEST( TEST_CASE_NAME, equals ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { -83, 141 };
+	constexpr fraction_t val3Expected { -12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction_t val1Actual { 2, 1 };
+	constexpr fraction_t val2Actual { -83, 141 };
+	constexpr fraction_t val3Actual { -12714, 1616795 };
+	constexpr fraction_t val4Actual { 0, 1 };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
 TEST( TEST_CASE_NAME, reduction ) {
 	constexpr fraction_t val1 { 4, 2 };
 	constexpr fraction_t val2 { -498, 846 };
@@ -57,4 +86,33 @@ TEST( TEST_CASE_NAME, reductionEquals ) {
 	EXPECT_NE( val2Reduced, val4 );
 	EXPECT_NE( val3Reduced, val4 );
 	EXPECT_EQ( val4Reduced, val4 );
+}
+
+TEST( TEST_CASE_NAME, floatingPointConstructor ) {
+	constexpr fraction_t val1 { 2.0 };
+	const fraction_t val2 { -0.588652482269503546099290780141843971 };
+	const fraction_t val3 { -0.007863705664601882118635943332333412 };
+	constexpr fraction_t val4 { 0.0 };
+
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { -83, 141 };
+	constexpr fraction_t val3Expected { -12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	EXPECT_EQ( val1Expected, val1 );
+	EXPECT_NE( val2Expected, val1 );
+	EXPECT_NE( val3Expected, val1 );
+	EXPECT_NE( val4Expected, val1 );
+	EXPECT_NE( val1Expected, val2 );
+	EXPECT_EQ( val2Expected, val2 );
+	EXPECT_NE( val3Expected, val2 );
+	EXPECT_NE( val4Expected, val2 );
+	EXPECT_NE( val1Expected, val3 );
+	EXPECT_NE( val2Expected, val3 );
+	EXPECT_EQ( val3Expected, val3 );
+	EXPECT_NE( val4Expected, val3 );
+	EXPECT_NE( val1Expected, val4 );
+	EXPECT_NE( val2Expected, val4 );
+	EXPECT_NE( val3Expected, val4 );
+	EXPECT_EQ( val4Expected, val4 );
 }
