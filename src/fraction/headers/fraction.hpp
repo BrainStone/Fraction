@@ -4,11 +4,12 @@
 //
 #pragma once
 
+#include <cstdint>
 #include <numeric>
 #include <type_traits>
 
 template<
-	class T = int64_t,
+	class T = std::int64_t,
 	class = typename std::enable_if<std::is_integral<T>::value>::type
 >
 class fraction {

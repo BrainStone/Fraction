@@ -8,7 +8,7 @@
 
 #define TEST_CASE_NAME ConstexprTest_uint64_t
 
-using fraction_t = fraction<uint64_t>;
+using fraction_t = fraction<std::uint64_t>;
 
 TEST( TEST_CASE_NAME, reduction ) {
 	constexpr fraction_t val1 { 4, 2 };
