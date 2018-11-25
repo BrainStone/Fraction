@@ -50,6 +50,17 @@ model {
                 content.text = content.text.replaceAll("HideSolutionNode = FALSE", "HideSolutionNode = TRUE")
             }
         }
+        projects.all {
+            projectFile.location = ".vs/${name}.vcxproj"
+            filtersFile.location = ".vs/${name}.vcxproj.filters"
+            projectFile.withXml {
+                asNode().@ToolsVersion = "15.0"
+                asNode().PropertyGroup.findAll{it.@Label == "Configuration"}.each{
+                        it.PlatformToolset[0].value = "v150"
+                        it.appendNode("AdditionalOptions", "/std:c++17")
+                }
+            }
+        }
     }
 
     components {
