@@ -30,7 +30,7 @@ private:
 		class D,
 		class CHECK_D = typename std::enable_if<std::is_floating_point<D>::value>::type
 	>
-	constexpr const D& abs( const D& value ) const noexcept;
+	constexpr D abs( const D& value ) const noexcept;
 
 public:
 	// Fraction Contrsuctor
@@ -81,7 +81,7 @@ private:
 
 template<class T, class CHECK_T>
 template<class D, class CHECK_D>
-inline constexpr const D& fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
+inline constexpr D fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
 	if ( value < 0.0 )
 		return -value;
 	else
