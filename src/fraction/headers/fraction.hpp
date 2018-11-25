@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <numeric>
+#include <stdexcept>
 #include <type_traits>
 
 template<
@@ -83,6 +84,9 @@ inline constexpr bool fraction<T, CHECK>::operator!=( const fraction<T>& rhs ) c
 
 template<class T, class CHECK>
 inline constexpr void fraction<T, CHECK>::reduce() {
+	if ( denominator == ZERO )
+		throw std::invalid_argument("The denominator must not be 0!");
+
 	const T gcd { std::gcd( numerator, denominator ) };
 
 	numerator /= gcd;

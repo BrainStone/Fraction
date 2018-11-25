@@ -10,6 +10,10 @@
 
 using fraction_t = fraction<std::uint64_t>;
 
+TEST( TEST_CASE_NAME, zeroExcpetion ) {
+	EXPECT_THROW( fraction_t( 0, 0 ), std::invalid_argument );
+}
+
 TEST( TEST_CASE_NAME, reduction ) {
 	constexpr fraction_t val1 { 4, 2 };
 	constexpr fraction_t val2 { 498, 846 };
