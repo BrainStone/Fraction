@@ -1,0 +1,27 @@
+stages:
+- build
+- test
+- clean
+  
+build:
+  stage: build
+  script:
+  - ./gradlew clean
+  - ./gradlew assemble
+  when: on_success
+
+test:
+  stage: test
+  script:
+  - ./gradlew clean
+  - ./gradlew check
+  when: on_success
+  artifacts:
+    reports:
+      junit: build/*/*/gtestresults.xml
+
+clean:
+  stage: clean
+  script:
+  - ./gradlew clean
+  when: always
