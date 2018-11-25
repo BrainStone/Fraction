@@ -28,18 +28,24 @@ private:
 
 public:
 	// Fraction Contrsuctor
-	constexpr fraction( T numerator, T denominator = ONE );
+	constexpr fraction( T numerator = ZERO, T denominator = ONE );
 
 	// Floating Point constructor
 	template<
 		class D,
 		class = typename std::enable_if<std::is_floating_point<D>::value>::type
 	>
-	constexpr fraction( D value );
+	constexpr fraction( D value, D precison = 0 );
+
+	constexpr fraction( const fraction<T>& copy ) = default;
 
 	constexpr const T& getNumerator() const noexcept;
 	constexpr const T& getDenominator() const noexcept;
+	
+	// Assignment operator
+	constexpr fraction<T>& operator=( const fraction<T>& rhs ) noexcept = default;
 
+	// Relational operators
 	constexpr bool operator==( const fraction<T>& rhs ) const noexcept;
 	constexpr bool operator!=( const fraction<T>& rhs ) const noexcept;
 
@@ -60,7 +66,7 @@ inline constexpr fraction<T, CHECK>::fraction( T numerator, T denominator ) :
 
 template<class T, class CHECK>
 template<class D, class CHECK2>
-inline constexpr fraction<T, CHECK>::fraction( D value ) {}
+inline constexpr fraction<T, CHECK>::fraction( D value, D precison ) {}
 
 template<class T, class CHECK>
 inline constexpr const T& fraction<T, CHECK>::getNumerator() const noexcept {
