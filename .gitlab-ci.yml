@@ -11,7 +11,7 @@ build:
   script:
   - ./gradlew clean
   - mkdir -p src/fraction/cpp
-  - echo "#include \"fraction.hpp\"\nfraction test {0};" > src/fraction/cpp/fraction.cpp
+  - "echo \"#include \\\"fraction.hpp\\\"\nfraction test {0};\" > src/fraction/cpp/fraction.cpp"
   - ./gradlew assemble
   when: on_success
 
