@@ -43,6 +43,35 @@ TEST( TEST_CASE_NAME, equals ) {
 	EXPECT_EQ( val4Expected, val4Actual );
 }
 
+TEST( TEST_CASE_NAME, differentFractionTypeEquals ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction<std::uint32_t> val1Actual { 2, 1 };
+	constexpr fraction<std::uint32_t> val2Actual { 83, 141 };
+	constexpr fraction<std::uint32_t> val3Actual { 12714, 1616795 };
+	constexpr fraction<std::uint32_t> val4Actual { 0, 1 };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
 TEST( TEST_CASE_NAME, reduction ) {
 	constexpr fraction_t val1 { 4, 2 };
 	constexpr fraction_t val2 { 498, 846 };
@@ -119,4 +148,38 @@ TEST( TEST_CASE_NAME, floatingPointConstructor ) {
 
 TEST( TEST_CASE_NAME, negativeFloatingPointConstructor ) {
 	EXPECT_THROW( fraction_t( -1.0 ), std::invalid_argument );
+}
+
+TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction<std::uint32_t> val1Actual_uint32_t { 2, 1 };
+	constexpr fraction<std::uint32_t> val2Actual_uint32_t { 83, 141 };
+	constexpr fraction<std::uint32_t> val3Actual_uint32_t { 12714, 1616795 };
+	constexpr fraction<std::uint32_t> val4Actual_uint32_t { 0, 1 };
+
+	constexpr fraction_t val1Actual { val1Actual_uint32_t };
+	constexpr fraction_t val2Actual { val2Actual_uint32_t };
+	constexpr fraction_t val3Actual { val3Actual_uint32_t };
+	constexpr fraction_t val4Actual { val4Actual_uint32_t };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
 }
