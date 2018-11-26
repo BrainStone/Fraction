@@ -199,11 +199,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 template<class T, class CHECK_T>
 template<class T1, class CHECK_T1>
 inline constexpr fraction<T, CHECK_T>::fraction( const fraction<T1, CHECK_T1>& copy ) :
-	numerator( static_cast<T>(copy.numerator) ),
-	denominator( static_cast<T>(copy.denominator) ) {
-	// Just to be sure
-	reduce();
-}
+	fraction( static_cast<T>(copy.numerator), static_cast<T>(copy.denominator) ) {}
 
 template<class T, class CHECK_T>
 inline constexpr const T& fraction<T, CHECK_T>::getNumerator() const noexcept {
