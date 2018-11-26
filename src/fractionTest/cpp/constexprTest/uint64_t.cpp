@@ -72,6 +72,52 @@ TEST( TEST_CASE_NAME, differentFractionTypeEquals ) {
 	EXPECT_EQ( val4Expected, val4Actual );
 }
 
+TEST( TEST_CASE_NAME, differentTypeEquals ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr int64_t val1Actual { 2 };
+	constexpr double val2Actual { 0.588652482269503546099290780141843971 };
+	constexpr double val3Actual { 0.007863705664601882118635943332333412 };
+	constexpr int64_t val4Actual { 0 };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+
+	EXPECT_EQ( val1Actual, val1Expected );
+	EXPECT_NE( val1Actual, val2Expected );
+	EXPECT_NE( val1Actual, val3Expected );
+	EXPECT_NE( val1Actual, val4Expected );
+	EXPECT_NE( val2Actual, val1Expected );
+	EXPECT_EQ( val2Actual, val2Expected );
+	EXPECT_NE( val2Actual, val3Expected );
+	EXPECT_NE( val2Actual, val4Expected );
+	EXPECT_NE( val3Actual, val1Expected );
+	EXPECT_NE( val3Actual, val2Expected );
+	EXPECT_EQ( val3Actual, val3Expected );
+	EXPECT_NE( val3Actual, val4Expected );
+	EXPECT_NE( val4Actual, val1Expected );
+	EXPECT_NE( val4Actual, val2Expected );
+	EXPECT_NE( val4Actual, val3Expected );
+	EXPECT_EQ( val4Actual, val4Expected );
+}
+
 TEST( TEST_CASE_NAME, reduction ) {
 	constexpr fraction_t val1 { 4, 2 };
 	constexpr fraction_t val2 { 498, 846 };

@@ -86,11 +86,19 @@ public:
 	friend constexpr bool operator==( const fraction<T1>& lhs, const fraction<T2>& rhs );
 	template<class T1, class CHECK_T1>
 	friend constexpr bool operator==( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept;
+	template<class T1, class D, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator==( const fraction<T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_D, class CHECK_T1>
+	friend constexpr bool operator==( const D& lhs, const fraction<T1>& rhs );
 
 	template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
 	friend constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T2>& rhs );
 	template<class T1, class CHECK_T1>
 	friend constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept;
+	template<class T1, class D, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator!=( const fraction<T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_D, class CHECK_T1>
+	friend constexpr bool operator!=( const D& lhs, const fraction<T1>& rhs );
 
 private:
 	constexpr void reduce();
@@ -113,7 +121,21 @@ template<
 	class T1,
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
 >
-inline constexpr bool operator==( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept;
+constexpr bool operator==( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept;
+template<
+	class T1,
+	class D,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_D = typename std::enable_if<std::is_integral<D>::value || std::is_floating_point<D>::value>::type
+>
+constexpr bool operator==( const fraction<T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_D = typename std::enable_if<std::is_integral<D>::value || std::is_floating_point<D>::value>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr bool operator==( const D& lhs, const fraction<T1>& rhs );
 
 template<
 	class T1,
@@ -129,6 +151,20 @@ template<
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
 >
 constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept;
+template<
+	class T1,
+	class D,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_D = typename std::enable_if<std::is_integral<D>::value || std::is_floating_point<D>::value>::type
+>
+constexpr bool operator!=( const fraction<T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_D = typename std::enable_if<std::is_integral<D>::value || std::is_floating_point<D>::value>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr bool operator!=( const D& lhs, const fraction<T1>& rhs );
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation
@@ -221,6 +257,16 @@ inline constexpr bool operator==( const fraction<T1>& lhs, const fraction<T1>& r
 	return (lhs.numerator == rhs.numerator) && (lhs.denominator == rhs.denominator);
 }
 
+template<class T1, class D, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator==( const fraction<T1>& lhs, const D & rhs ) {
+	return lhs == fraction<T1>( rhs );
+}
+
+template<class D, class T1, class CHECK_D, class CHECK_T1>
+inline constexpr bool operator==( const D & lhs, const fraction<T1>& rhs ) {
+	return rhs == lhs;
+}
+
 template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
 inline constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T2>& rhs ) {
 	return !(lhs == rhs);
@@ -229,6 +275,16 @@ inline constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T2>& r
 template<class T1, class CHECK_T1>
 inline constexpr bool operator!=( const fraction<T1>& lhs, const fraction<T1>& rhs ) noexcept {
 	return !(lhs == rhs);
+}
+
+template<class T1, class D, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator!=( const fraction<T1>& lhs, const D & rhs ) {
+	return !(lhs == rhs);
+}
+
+template<class D, class T1, class CHECK_D, class CHECK_T1>
+inline constexpr bool operator!=( const D & lhs, const fraction<T1>& rhs ) {
+	return rhs != lhs;
 }
 
 template<class T, class CHECK_T>
