@@ -229,3 +229,71 @@ TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
 	EXPECT_NE( val3Expected, val4Actual );
 	EXPECT_EQ( val4Expected, val4Actual );
 }
+
+TEST( TEST_CASE_NAME, differentFractionTypeConversion ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction<std::uint32_t> val1Actual_uint32_t { 2, 1 };
+	constexpr fraction<std::uint32_t> val2Actual_uint32_t { 83, 141 };
+	constexpr fraction<std::uint32_t> val3Actual_uint32_t { 12714, 1616795 };
+	constexpr fraction<std::uint32_t> val4Actual_uint32_t { 0, 1 };
+
+	constexpr fraction_t val1Actual = static_cast<fraction_t>(val1Actual_uint32_t);
+	constexpr fraction_t val2Actual = static_cast<fraction_t>(val2Actual_uint32_t);
+	constexpr fraction_t val3Actual = static_cast<fraction_t>(val3Actual_uint32_t);
+	constexpr fraction_t val4Actual = static_cast<fraction_t>(val4Actual_uint32_t);
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, differentTypeConversion ) {
+	constexpr uint64_t val1Expected { 2 };
+	constexpr double val2Expected { 0.588652482269503546099290780141843971 };
+	constexpr double val3Expected { 0.007863705664601882118635943332333412 };
+	constexpr uint64_t val4Expected { 0 };
+
+	constexpr fraction_t val1Actual_uint64_t { 2, 1 };
+	constexpr fraction_t val2Actual_uint64_t { 83, 141 };
+	constexpr fraction_t val3Actual_uint64_t { 12714, 1616795 };
+	constexpr fraction_t val4Actual_uint64_t { 0, 1 };
+
+	constexpr uint64_t val1Actual = static_cast<uint64_t>(val1Actual_uint64_t);
+	constexpr double val2Actual = static_cast<double>(val2Actual_uint64_t);
+	constexpr double val3Actual = static_cast<double>(val3Actual_uint64_t);
+	constexpr uint64_t val4Actual = static_cast<uint64_t>(val4Actual_uint64_t);
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}

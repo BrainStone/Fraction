@@ -78,7 +78,7 @@ public:
 	constexpr const T& getNumerator() const noexcept;
 	constexpr const T& getDenominator() const noexcept;
 
-	// Assignment operator
+	// Assignment operators
 	constexpr fraction<T, CHECK_T>& operator=( const fraction<T, CHECK_T>& rhs ) noexcept = default;
 
 	// Relational operators
@@ -99,6 +99,13 @@ public:
 	friend constexpr bool operator!=( const fraction<T1>& lhs, const D& rhs );
 	template<class D, class T1, class CHECK_D, class CHECK_T1>
 	friend constexpr bool operator!=( const D& lhs, const fraction<T1>& rhs );
+
+	// Conversion operators
+	template<
+		class D,
+		class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	>
+	constexpr operator D() const noexcept;
 
 private:
 	constexpr void reduce();
@@ -126,7 +133,7 @@ template<
 	class T1,
 	class D,
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
-	class CHECK_D = typename std::enable_if<std::is_integral<D>::value || std::is_floating_point<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
 >
 constexpr bool operator==( const fraction<T1>& lhs, const D& rhs );
 template<
@@ -285,6 +292,12 @@ inline constexpr bool operator!=( const fraction<T1>& lhs, const D & rhs ) {
 template<class D, class T1, class CHECK_D, class CHECK_T1>
 inline constexpr bool operator!=( const D & lhs, const fraction<T1>& rhs ) {
 	return rhs != lhs;
+}
+
+template<class T, class CHECK_T>
+template<class D, class CHECK_D>
+inline constexpr fraction<T, CHECK_T>::operator D() const noexcept {
+	return static_cast<D>(numerator) / static_cast<D>(denominator);
 }
 
 template<class T, class CHECK_T>
