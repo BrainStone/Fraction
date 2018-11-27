@@ -276,7 +276,7 @@ constexpr fraction<T1, CHECK_T1> operator-( const D& lhs, const fraction<T1>& rh
 template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr D fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
-	if ( value < 0.0 )
+	if ( value < D{ 0 } )
 		return -value;
 	else
 		return value;
@@ -284,19 +284,19 @@ inline constexpr D fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
 
 template<class T, class CHECK_T>
 inline constexpr fraction<T, CHECK_T>::fraction( const T& numerator, const T& denominator ) :
-	numerator( numerator ),
-	denominator( denominator ) {
+	numerator { numerator },
+	denominator { denominator } {
 	reduce();
 }
 
 template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precison ) :
-	numerator(),
-	denominator() {
+	numerator {},
+	denominator {} {
 	T digitT {};
 
-	const bool negative = value < D( 0.0 );
+	const bool negative = value < D{ 0 };
 
 	if constexpr ( !IS_SIGNED )
 		if ( negative )
@@ -325,7 +325,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 		if ( fraction<T, CHECK_T>::abs( (static_cast<D>(n1) / static_cast<D>(d1)) - posValue ) <= precison )
 			break;
 
-		rest = D( 1.0 ) / (rest - static_cast<D>(digitT));
+		rest = D{ 1 } / (rest - static_cast<D>(digitT));
 	}
 
 	if constexpr ( IS_SIGNED )
@@ -352,7 +352,7 @@ inline constexpr const T& fraction<T, CHECK_T>::getDenominator() const noexcept 
 
 template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
 inline constexpr bool operator==( const fraction<T1>& lhs, const fraction<T2>& rhs ) {
-	return fraction<COMMON, CHECK_COMMON>( lhs ) == fraction<COMMON, CHECK_COMMON>( rhs );
+	return fraction<COMMON, CHECK_COMMON>{ lhs } == fraction<COMMON, CHECK_COMMON>{ rhs };
 }
 
 template<class T1, class CHECK_T1>
@@ -362,7 +362,7 @@ inline constexpr bool operator==( const fraction<T1>& lhs, const fraction<T1>& r
 
 template<class T1, class D, class CHECK_T1, class CHECK_D>
 inline constexpr bool operator==( const fraction<T1>& lhs, const D & rhs ) {
-	return lhs == fraction<T1, CHECK_T1>( rhs );
+	return lhs == fraction<T1, CHECK_T1>{ rhs };
 }
 
 template<class D, class T1, class CHECK_D, class CHECK_T1>
@@ -392,7 +392,7 @@ inline constexpr bool operator!=( const D & lhs, const fraction<T1>& rhs ) {
 
 template<class T, class CHECK_T>
 inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator+=( const fraction<T, CHECK_T>& rhs ) {
-	const T lcm = std::lcm( denominator, rhs.denominator );
+	const T lcm { std::lcm( denominator, rhs.denominator ) };
 
 	numerator = (numerator * (lcm / denominator)) + (rhs.numerator * (lcm / rhs.denominator));
 	denominator = lcm;
@@ -420,7 +420,7 @@ inline constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1>& lhs, cons
 
 template<class T1, class D, class CHECK_T1, class CHECK_D>
 inline constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1>& lhs, const D & rhs ) {
-	return lhs + fraction<T1>( rhs );
+	return lhs + fraction<T1>{ rhs };
 }
 
 template<class D, class T1, class CHECK_D, class CHECK_T1>
@@ -430,7 +430,7 @@ inline constexpr fraction<T1, CHECK_T1> operator+( const D & lhs, const fraction
 
 template<class T, class CHECK_T>
 inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator-=( const fraction<T, CHECK_T>& rhs ) {
-	const T lcm = std::lcm( denominator, rhs.denominator );
+	const T lcm { std::lcm( denominator, rhs.denominator ) };
 
 	numerator = (numerator * (lcm / denominator)) - (rhs.numerator * (lcm / rhs.denominator));
 	denominator = lcm;
@@ -458,12 +458,12 @@ inline constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1>& lhs, cons
 
 template<class T1, class D, class CHECK_T1, class CHECK_D>
 inline constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1>& lhs, const D & rhs ) {
-	return lhs - fraction<T1>( rhs );
+	return lhs - fraction<T1>{ rhs };
 }
 
 template<class D, class T1, class CHECK_D, class CHECK_T1>
 inline constexpr fraction<T1, CHECK_T1> operator-( const D & lhs, const fraction<T1>& rhs ) {
-	return fraction<T1>( lhs ) - rhs;
+	return fraction<T1>{ lhs } - rhs;
 }
 
 template<class T, class CHECK_T>
