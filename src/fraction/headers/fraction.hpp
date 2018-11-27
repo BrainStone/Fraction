@@ -131,8 +131,30 @@ public:
 	friend constexpr fraction<T1, CHECK_T1> operator-( const D& lhs, const fraction<T1>& rhs );
 
 
-	// TODO: operator*=, operator*
-	// TODO: operator/=, operator/
+	constexpr fraction<T, CHECK_T>& operator*=( const fraction<T, CHECK_T>& rhs );
+
+	template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
+	friend constexpr fraction<COMMON, CHECK_COMMON> operator*( const fraction<T1>& lhs, const fraction<T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const fraction<T1>& rhs );
+	template<class T1, class D, class CHECK_T1, class CHECK_D>
+	friend constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_D, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator*( const D& lhs, const fraction<T1>& rhs );
+
+
+	constexpr fraction<T, CHECK_T>& operator/=( const fraction<T, CHECK_T>& rhs );
+
+	template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
+	friend constexpr fraction<COMMON, CHECK_COMMON> operator/( const fraction<T1>& lhs, const fraction<T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const fraction<T1>& rhs );
+	template<class T1, class D, class CHECK_T1, class CHECK_D>
+	friend constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_D, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1>& rhs );
+
+
 	// TODO: operator++
 	// TODO: operator--
 
@@ -268,6 +290,64 @@ template<
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator-( const D& lhs, const fraction<T1>& rhs );
+
+template<
+	class T1,
+	class T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_T2 = typename std::enable_if<std::is_integral<T2>::value>::type,
+	class CHECK_COMMON = typename std::enable_if<std::is_integral<COMMON>::value>::type
+>
+constexpr fraction<COMMON, CHECK_COMMON> operator*( const fraction<T1>& lhs, const fraction<T2>& rhs );
+template<
+	class T1,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const fraction<T1>& rhs );
+template<
+	class T1,
+	class D,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator*( const D& lhs, const fraction<T1>& rhs );
+
+template<
+	class T1,
+	class T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_T2 = typename std::enable_if<std::is_integral<T2>::value>::type,
+	class CHECK_COMMON = typename std::enable_if<std::is_integral<COMMON>::value>::type
+>
+constexpr fraction<COMMON, CHECK_COMMON> operator/( const fraction<T1>& lhs, const fraction<T2>& rhs );
+template<
+	class T1,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const fraction<T1>& rhs );
+template<
+	class T1,
+	class D,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type,
+	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+>
+constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1>& rhs );
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation
@@ -464,6 +544,78 @@ inline constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1>& lhs, cons
 template<class D, class T1, class CHECK_D, class CHECK_T1>
 inline constexpr fraction<T1, CHECK_T1> operator-( const D & lhs, const fraction<T1>& rhs ) {
 	return fraction<T1>{ lhs } - rhs;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator*=( const fraction<T, CHECK_T>& rhs ) {
+	numerator *= rhs.numerator;
+	denominator *= rhs.denominator;
+
+	reduce();
+
+	return *this;
+}
+
+template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
+inline constexpr fraction<COMMON, CHECK_COMMON> operator*( const fraction<T1>& lhs, const fraction<T2>& rhs ) {
+	fraction<COMMON, CHECK_COMMON> out { lhs };
+	out *= rhs;
+
+	return out;
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const fraction<T1>& rhs ) {
+	fraction<T1, CHECK_T1> out { lhs };
+	out *= rhs;
+
+	return out;
+}
+
+template<class T1, class D, class CHECK_T1, class CHECK_D>
+inline constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1>& lhs, const D & rhs ) {
+	return lhs * fraction<T1>{ rhs };
+}
+
+template<class D, class T1, class CHECK_D, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator*( const D & lhs, const fraction<T1>& rhs ) {
+	return rhs * lhs;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator/=( const fraction<T, CHECK_T>& rhs ) {
+	numerator *= rhs.denominator;
+	denominator *= rhs.numerator;
+
+	reduce();
+
+	return *this;
+}
+
+template<class T1, class T2, class COMMON, class CHECK_T1, class CHECK_T2, class CHECK_COMMON>
+inline constexpr fraction<COMMON, CHECK_COMMON> operator/( const fraction<T1>& lhs, const fraction<T2>& rhs ) {
+	fraction<COMMON, CHECK_COMMON> out { lhs };
+	out /= rhs;
+
+	return out;
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const fraction<T1>& rhs ) {
+	fraction<T1, CHECK_T1> out { lhs };
+	out /= rhs;
+
+	return out;
+}
+
+template<class T1, class D, class CHECK_T1, class CHECK_D>
+inline constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, const D & rhs ) {
+	return lhs / fraction<T1>{ rhs };
+}
+
+template<class D, class T1, class CHECK_D, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator/( const D & lhs, const fraction<T1>& rhs ) {
+	return fraction<T1>{ lhs } / rhs;
 }
 
 template<class T, class CHECK_T>
