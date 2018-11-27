@@ -79,10 +79,10 @@ TEST( TEST_CASE_NAME, differentTypeEquals ) {
 	constexpr fraction_t val3Expected { -12714, 1616795 };
 	constexpr fraction_t val4Expected { 0, 1 };
 
-	constexpr int64_t val1Actual { 2 };
+	constexpr std::int64_t val1Actual { 2 };
 	constexpr double val2Actual { -0.588652482269503546099290780141843971 };
 	constexpr double val3Actual { -0.007863705664601882118635943332333412 };
-	constexpr int64_t val4Actual { 0 };
+	constexpr std::int64_t val4Actual { 0 };
 
 	EXPECT_EQ( val1Expected, val1Actual );
 	EXPECT_NE( val2Expected, val1Actual );
@@ -262,20 +262,20 @@ TEST( TEST_CASE_NAME, differentFractionTypeConversion ) {
 }
 
 TEST( TEST_CASE_NAME, differentTypeConversion ) {
-	constexpr int64_t val1Expected { 2 };
+	constexpr std::int64_t val1Expected { 2 };
 	constexpr double val2Expected { -0.588652482269503546099290780141843971 };
 	constexpr double val3Expected { -0.007863705664601882118635943332333412 };
-	constexpr int64_t val4Expected { 0 };
+	constexpr std::int64_t val4Expected { 0 };
 
 	constexpr fraction_t val1Actual_int64_t { 2, 1 };
 	constexpr fraction_t val2Actual_int64_t { -83, 141 };
 	constexpr fraction_t val3Actual_int64_t { -12714, 1616795 };
 	constexpr fraction_t val4Actual_int64_t { 0, 1 };
 
-	constexpr int64_t val1Actual { static_cast<int64_t>(val1Actual_int64_t) };
+	constexpr std::int64_t val1Actual { static_cast<std::int64_t>(val1Actual_int64_t) };
 	constexpr double val2Actual { static_cast<double>(val2Actual_int64_t) };
 	constexpr double val3Actual { static_cast<double>(val3Actual_int64_t) };
-	constexpr int64_t val4Actual { static_cast<int64_t>(val4Actual_int64_t) };
+	constexpr std::int64_t val4Actual { static_cast<std::int64_t>(val4Actual_int64_t) };
 
 	EXPECT_EQ( val1Expected, val1Actual );
 	EXPECT_NE( val2Expected, val1Actual );
@@ -341,10 +341,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesAdditon ) {
 
 	constexpr fraction_t val1AdditonLhs { 1, 2 };
 	constexpr fraction_t val2AdditonLhs { 7899, 1235 };
-	constexpr fraction<int32_t> val3AdditonLhs { -4565, 5464 };
-	constexpr fraction<int32_t> val4AdditonLhs { 1, 1 };
-	constexpr fraction<int32_t> val1AdditonRhs { 3, 2 };
-	constexpr fraction<int32_t> val2AdditonRhs { -1216264, 174135 };
+	constexpr fraction<std::int32_t> val3AdditonLhs { -4565, 5464 };
+	constexpr fraction<std::int32_t> val4AdditonLhs { 1, 1 };
+	constexpr fraction<std::int32_t> val1AdditonRhs { 3, 2 };
+	constexpr fraction<std::int32_t> val2AdditonRhs { -1216264, 174135 };
 	constexpr fraction_t val3AdditonRhs { 7311199879, 8834167880 };
 	constexpr fraction_t val4AdditonRhs { -1, 1 };
 
@@ -380,9 +380,9 @@ TEST( TEST_CASE_NAME, differentTypesAdditon ) {
 	constexpr fraction_t val1AdditonLhs { 1, 2 };
 	constexpr fraction_t val2AdditonLhs { 481, 141 };
 	constexpr double val3AdditonLhs { -0.835468521229868228404099560761 };
-	constexpr int64_t val4AdditonLhs { 1 };
+	constexpr std::int64_t val4AdditonLhs { 1 };
 	constexpr double val1AdditonRhs { 1.5 };
-	constexpr int64_t val2AdditonRhs { -4 };
+	constexpr std::int64_t val2AdditonRhs { -4 };
 	constexpr fraction_t val3AdditonRhs { 7311199879, 8834167880 };
 	constexpr fraction_t val4AdditonRhs { -1, 1 };
 
@@ -455,10 +455,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesSubtraction ) {
 
 	constexpr fraction_t val1AdditonLhs { 1, 2 };
 	constexpr fraction_t val2AdditonLhs { 7899, 1235 };
-	constexpr fraction<int32_t> val3AdditonLhs { -4565, 5464 };
-	constexpr fraction<int32_t> val4AdditonLhs { 1, 1 };
-	constexpr fraction<int32_t> val1AdditonRhs { -3, 2 };
-	constexpr fraction<int32_t> val2AdditonRhs { 1216264, 174135 };
+	constexpr fraction<std::int32_t> val3AdditonLhs { -4565, 5464 };
+	constexpr fraction<std::int32_t> val4AdditonLhs { 1, 1 };
+	constexpr fraction<std::int32_t> val1AdditonRhs { -3, 2 };
+	constexpr fraction<std::int32_t> val2AdditonRhs { 1216264, 174135 };
 	constexpr fraction_t val3AdditonRhs { -7311199879, 8834167880 };
 	constexpr fraction_t val4AdditonRhs { 1, 1 };
 
@@ -494,9 +494,9 @@ TEST( TEST_CASE_NAME, differentTypesSubtraction ) {
 	constexpr fraction_t val1AdditonLhs { 1, 2 };
 	constexpr fraction_t val2AdditonLhs { 481, 141 };
 	constexpr double val3AdditonLhs { -0.835468521229868228404099560761 };
-	constexpr int64_t val4AdditonLhs { 1 };
+	constexpr std::int64_t val4AdditonLhs { 1 };
 	constexpr double val1AdditonRhs { -1.5 };
-	constexpr int64_t val2AdditonRhs { 4 };
+	constexpr std::int64_t val2AdditonRhs { 4 };
 	constexpr fraction_t val3AdditonRhs { -7311199879, 8834167880 };
 	constexpr fraction_t val4AdditonRhs { 1, 1 };
 
