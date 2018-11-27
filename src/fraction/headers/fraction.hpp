@@ -9,9 +9,9 @@
 #include <stdexcept>
 #include <type_traits>
 
-//////////////////
+////////////////////////////////
 // Declarations
-//////////////////
+////////////////////////////////
 
 template<
 	class T = std::int64_t,
@@ -165,13 +165,18 @@ public:
 	>
 	constexpr operator D() const noexcept;
 
+	// Stream operators
+
+	// TODO: operator<<
+	// TODO: operator>> (maybe)
+
 private:
 	constexpr void reduce();
 };
 
-//////////////////
+////////////////////////////////
 // Friends
-//////////////////
+////////////////////////////////
 
 // Relational operators
 template<
@@ -348,6 +353,13 @@ template<
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1>& rhs );
+
+////////////////////////////////
+// Traits and Limits
+////////////////////////////////
+
+// TODO: type_traits
+// TODO: numeric_limits
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation
