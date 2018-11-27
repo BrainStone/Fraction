@@ -336,7 +336,7 @@ TEST( TEST_CASE_NAME, additon ) {
 	EXPECT_EQ( val4Expected, val4Actual );
 }
 
-TEST( TEST_CASE_NAME, additonDifferentFractionTypes ) {
+TEST( TEST_CASE_NAME, differentFractionTypesAdditon ) {
 	constexpr fraction_t val1Expected { 2, 1 };
 	constexpr fraction_t val2Expected { 83, 141 };
 	constexpr fraction_t val3Expected { 12714, 1616795 };
@@ -374,7 +374,7 @@ TEST( TEST_CASE_NAME, additonDifferentFractionTypes ) {
 	EXPECT_EQ( val4Expected, val4Actual );
 }
 
-TEST( TEST_CASE_NAME, additonDifferentTypes ) {
+TEST( TEST_CASE_NAME, differentTypesAdditon ) {
 	constexpr fraction_t val1Expected { 2, 1 };
 	constexpr fraction_t val2Expected { 83, 141 };
 	constexpr fraction_t val3Expected { 12714, 1616795 };
@@ -393,6 +393,120 @@ TEST( TEST_CASE_NAME, additonDifferentTypes ) {
 	constexpr fraction_t val2Actual = val2AdditonLhs + val2AdditonRhs;
 	constexpr fraction_t val3Actual = val3AdditonLhs + val3AdditonRhs;
 	constexpr fraction_t val4Actual = val4AdditonLhs + val4AdditonRhs;
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, subtraction ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction_t val1AdditonLhs { 7, 2 };
+	constexpr fraction_t val2AdditonLhs { 45419, 40749 };
+	constexpr fraction_t val3AdditonLhs { 92008293157, 91046576835 };
+	constexpr fraction_t val4AdditonLhs { 1, 1 };
+	constexpr fraction_t val1AdditonRhs { 3, 2 };
+	constexpr fraction_t val2AdditonRhs { 456, 867 };
+	constexpr fraction_t val3AdditonRhs { 56465, 56313 };
+	constexpr fraction_t val4AdditonRhs { 1, 1 };
+
+	constexpr fraction_t val1Actual = val1AdditonLhs - val1AdditonRhs;
+	constexpr fraction_t val2Actual = val2AdditonLhs - val2AdditonRhs;
+	constexpr fraction_t val3Actual = val3AdditonLhs - val3AdditonRhs;
+	constexpr fraction_t val4Actual = val4AdditonLhs - val4AdditonRhs;
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, differentFractionTypesSubtraction ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction_t val1AdditonLhs { 1, 2 };
+	constexpr fraction_t val2AdditonLhs { 45419, 40749 };
+	constexpr fraction<int32_t> val3AdditonLhs { 85715563, 3233590 };
+	constexpr fraction<int32_t> val4AdditonLhs { 1, 1 };
+	constexpr fraction<int32_t> val1AdditonRhs { -3, 2 };
+	constexpr fraction<int32_t> val2AdditonRhs { 456, 867 };
+	constexpr fraction_t val3AdditonRhs { 53, 2 };
+	constexpr fraction_t val4AdditonRhs { 1, 1 };
+
+	constexpr fraction_t val1Actual = val1AdditonLhs - val1AdditonRhs;
+	constexpr fraction_t val2Actual = val2AdditonLhs - val2AdditonRhs;
+	constexpr fraction_t val3Actual = val3AdditonLhs - val3AdditonRhs;
+	constexpr fraction_t val4Actual = val4AdditonLhs - val4AdditonRhs;
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, differentTypesSubtraction ) {
+	constexpr fraction_t val1Expected { 2, 1 };
+	constexpr fraction_t val2Expected { 83, 141 };
+	constexpr fraction_t val3Expected { 12714, 1616795 };
+	constexpr fraction_t val4Expected { 0, 1 };
+
+	constexpr fraction_t val1AdditonLhs { 7, 2 };
+	constexpr fraction_t val2AdditonLhs { 647, 141 };
+	constexpr double val3AdditonLhs { 26.507863705664601882118635 };
+	constexpr uint64_t val4AdditonLhs { 1 };
+	constexpr double val1AdditonRhs { 1.5 };
+	constexpr uint64_t val2AdditonRhs { 4 };
+	constexpr fraction_t val3AdditonRhs { 53, 2 };
+	constexpr fraction_t val4AdditonRhs { 1, 1 };
+
+	constexpr fraction_t val1Actual = val1AdditonLhs - val1AdditonRhs;
+	constexpr fraction_t val2Actual = val2AdditonLhs - val2AdditonRhs;
+	constexpr fraction_t val3Actual = val3AdditonLhs - val3AdditonRhs;
+	constexpr fraction_t val4Actual = val4AdditonLhs - val4AdditonRhs;
 
 	EXPECT_EQ( val1Expected, val1Actual );
 	EXPECT_NE( val2Expected, val1Actual );
