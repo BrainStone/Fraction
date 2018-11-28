@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <numeric>
+#include <ostream>
 #include <stdexcept>
 #include <type_traits>
 
@@ -170,8 +171,9 @@ public:
 	constexpr operator D() const noexcept;
 
 	// Stream operators
+	template<class charT, class traits, class T1, class CHECK_T1>
+	friend std::basic_ostream<charT, traits>& operator<<( std::basic_ostream<charT, traits>& ostream, const fraction<T1, CHECK_T1>& fraction );
 
-	// TODO: operator<<
 	// TODO: operator>> (maybe)
 
 private:
@@ -357,6 +359,15 @@ template<
 	class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1>& rhs );
+
+// Stream operators
+template<
+	class charT,
+	class traits,
+	class T1,
+	class CHECK_T1
+>
+std::basic_ostream<charT, traits>& operator<<( std::basic_ostream<charT, traits>& ostream, const fraction<T1, CHECK_T1>& fraction );
 
 ////////////////////////////////
 // Traits and Limits
@@ -676,6 +687,13 @@ template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr fraction<T, CHECK_T>::operator D() const noexcept {
 	return static_cast<D>(numerator) / static_cast<D>(denominator);
+}
+
+template<class charT, class traits, class T1, class CHECK_T1>
+inline std::basic_ostream<charT, traits>& operator<<( std::basic_ostream<charT, traits>& ostream, const fraction<T1, CHECK_T1>& fraction ) {
+	ostream << fraction.numerator << charT{ '/' } << fraction.denominator;
+
+	return ostream;
 }
 
 template<class T, class CHECK_T>

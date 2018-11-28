@@ -753,3 +753,91 @@ TEST( TEST_CASE_NAME, differentTypesDivision ) {
 	EXPECT_NE( val3Expected, val4Actual );
 	EXPECT_EQ( val4Expected, val4Actual );
 }
+
+TEST( TEST_CASE_NAME, ostream ) {
+	constexpr fraction_t val1 { 2, 1 };
+	constexpr fraction_t val2 { 83, 141 };
+	constexpr fraction_t val3 { 12714, 1616795 };
+	constexpr fraction_t val4 { 0, 1 };
+
+	const std::string val1Expected { "2/1" };
+	const std::string val2Expected { "83/141" };
+	const std::string val3Expected { "12714/1616795" };
+	const std::string val4Expected { "0/1" };
+
+	std::stringstream ss1;
+	std::stringstream ss2;
+	std::stringstream ss3;
+	std::stringstream ss4;
+
+	ss1 << val1;
+	ss2 << val2;
+	ss3 << val3;
+	ss4 << val4;
+
+	const std::string val1Actual { ss1.str() };
+	const std::string val2Actual { ss2.str() };
+	const std::string val3Actual { ss3.str() };
+	const std::string val4Actual { ss4.str() };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, wostream ) {
+	constexpr fraction_t val1 { 2, 1 };
+	constexpr fraction_t val2 { 83, 141 };
+	constexpr fraction_t val3 { 12714, 1616795 };
+	constexpr fraction_t val4 { 0, 1 };
+
+	const std::wstring val1Expected { L"2/1" };
+	const std::wstring val2Expected { L"83/141" };
+	const std::wstring val3Expected { L"12714/1616795" };
+	const std::wstring val4Expected { L"0/1" };
+
+	std::wstringstream ss1;
+	std::wstringstream ss2;
+	std::wstringstream ss3;
+	std::wstringstream ss4;
+
+	ss1 << val1;
+	ss2 << val2;
+	ss3 << val3;
+	ss4 << val4;
+
+	const std::wstring val1Actual { ss1.str() };
+	const std::wstring val2Actual { ss2.str() };
+	const std::wstring val3Actual { ss3.str() };
+	const std::wstring val4Actual { ss4.str() };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
