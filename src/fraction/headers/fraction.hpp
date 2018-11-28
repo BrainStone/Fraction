@@ -155,8 +155,12 @@ public:
 	friend constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1>& rhs );
 
 
-	// TODO: operator++
-	// TODO: operator--
+	constexpr fraction<T, CHECK_T>& operator++();
+	constexpr fraction<T, CHECK_T> operator++( int );
+
+
+	constexpr fraction<T, CHECK_T>& operator--();
+	constexpr fraction<T, CHECK_T> operator--( int );
 
 	// Conversion operators
 	template<
@@ -628,6 +632,44 @@ inline constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1>& lhs, cons
 template<class D, class T1, class CHECK_D, class CHECK_T1>
 inline constexpr fraction<T1, CHECK_T1> operator/( const D & lhs, const fraction<T1>& rhs ) {
 	return fraction<T1>{ lhs } / rhs;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator++() {
+	numerator += denominator;
+
+	// Just in case of interger overflow
+	reduce();
+
+	return *this;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T> fraction<T, CHECK_T>::operator++( int ) {
+	const fraction<T, CHECK_T> copy( *this );
+
+	operator++();
+
+	return copy;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T>& fraction<T, CHECK_T>::operator--() {
+	numerator -= denominator;
+
+	// Just in case of interger overflow
+	reduce();
+
+	return *this;
+}
+
+template<class T, class CHECK_T>
+inline constexpr fraction<T, CHECK_T> fraction<T, CHECK_T>::operator--( int ) {
+	const fraction<T, CHECK_T> copy( *this );
+
+	operator--();
+
+	return copy;
 }
 
 template<class T, class CHECK_T>
