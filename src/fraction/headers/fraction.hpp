@@ -510,7 +510,7 @@ namespace std {
 template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr D fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
-	static constexpr D D_ZERO { 0 };
+	constexpr D D_ZERO { 0 };
 
 	if ( value < D_ZERO )
 		return -value;
@@ -545,8 +545,8 @@ template<class D, class CHECK_D>
 inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precison ) :
 	numerator {},
 	denominator {} {
-	static constexpr D D_ZERO { 0 };
-	static constexpr D D_ONE { 1 };
+	constexpr D D_ZERO { 0 };
+	constexpr D D_ONE { 1 };
 
 	T digitT {};
 
@@ -861,7 +861,7 @@ inline constexpr void fraction<T, CHECK_T>::reduce() {
 template<class T, class CHECK_T>
 template<class T1, class CHECK_T1>
 inline constexpr void fraction<T, CHECK_T>::reduce(T1& numerator, T1& denominator ) {
-	static constexpr T1 D_ZERO { 0 };
+	constexpr T1 D_ZERO { 0 };
 
 	if ( denominator == D_ZERO )
 		throw std::invalid_argument( "The denominator must not be 0!" );
