@@ -24,17 +24,17 @@ TEST( TEST_CASE_NAME, is_specialized ) {
 }
 
 TEST( TEST_CASE_NAME, min ) {
-	EXPECT_EQ( fraction_t { LLONG_MIN }, std::numeric_limits<fraction_t>::min() );
-	EXPECT_EQ( ufraction_t { 0 }, std::numeric_limits<ufraction_t>::min() );
-	EXPECT_EQ( fraction32_t { LONG_MIN }, std::numeric_limits<fraction32_t>::min() );
-	EXPECT_EQ( ufraction32_t { 0 }, std::numeric_limits<ufraction32_t>::min() );
+	EXPECT_EQ( fraction_t { std::numeric_limits<std::int64_t>::min() }, std::numeric_limits<fraction_t>::min() );
+	EXPECT_EQ( ufraction_t { std::numeric_limits<std::uint64_t>::min() }, std::numeric_limits<ufraction_t>::min() );
+	EXPECT_EQ( fraction32_t { std::numeric_limits<std::int32_t>::min() }, std::numeric_limits<fraction32_t>::min() );
+	EXPECT_EQ( ufraction32_t { std::numeric_limits<std::uint32_t>::min() }, std::numeric_limits<ufraction32_t>::min() );
 }
 
 TEST( TEST_CASE_NAME, max ) {
-	EXPECT_EQ( fraction_t { LLONG_MAX }, std::numeric_limits<fraction_t>::max() );
-	EXPECT_EQ( ufraction_t { ULLONG_MAX }, std::numeric_limits<ufraction_t>::max() );
-	EXPECT_EQ( fraction32_t { LONG_MAX }, std::numeric_limits<fraction32_t>::max() );
-	EXPECT_EQ( ufraction32_t { ULONG_MAX }, std::numeric_limits<ufraction32_t>::max() );
+	EXPECT_EQ( fraction_t { std::numeric_limits<std::int64_t>::max() }, std::numeric_limits<fraction_t>::max() );
+	EXPECT_EQ( ufraction_t { std::numeric_limits<std::uint64_t>::max() }, std::numeric_limits<ufraction_t>::max() );
+	EXPECT_EQ( fraction32_t { std::numeric_limits<std::int32_t>::max() }, std::numeric_limits<fraction32_t>::max() );
+	EXPECT_EQ( ufraction32_t { std::numeric_limits<std::uint32_t>::max() }, std::numeric_limits<ufraction32_t>::max() );
 }
 
 TEST( TEST_CASE_NAME, lowest ) {
@@ -73,10 +73,10 @@ TEST( TEST_CASE_NAME, radix ) {
 }
 
 TEST( TEST_CASE_NAME, epsilon ) {
-	EXPECT_EQ( fraction_t ( 1, LLONG_MAX ), std::numeric_limits<fraction_t>::epsilon() );
-	EXPECT_EQ( ufraction_t ( 1, ULLONG_MAX ), std::numeric_limits<ufraction_t>::epsilon() );
-	EXPECT_EQ( fraction32_t ( 1, LONG_MAX ), std::numeric_limits<fraction32_t>::epsilon() );
-	EXPECT_EQ( ufraction32_t ( 1, ULONG_MAX ), std::numeric_limits<ufraction32_t>::epsilon() );
+	EXPECT_EQ( fraction_t ( 1, std::numeric_limits<std::int64_t>::max() ), std::numeric_limits<fraction_t>::epsilon() );
+	EXPECT_EQ( ufraction_t ( 1, std::numeric_limits<std::uint64_t>::max() ), std::numeric_limits<ufraction_t>::epsilon() );
+	EXPECT_EQ( fraction32_t ( 1, std::numeric_limits<std::int32_t>::max() ), std::numeric_limits<fraction32_t>::epsilon() );
+	EXPECT_EQ( ufraction32_t ( 1, std::numeric_limits<std::uint32_t>::max() ), std::numeric_limits<ufraction32_t>::epsilon() );
 }
 
 TEST( TEST_CASE_NAME, round_error ) {
