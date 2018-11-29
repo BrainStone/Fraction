@@ -194,6 +194,37 @@ TEST( TEST_CASE_NAME, floatingPointConstructor ) {
 }
 
 TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
+	constexpr std::int64_t factor { std::numeric_limits<std::int32_t>::max() };
+
+	constexpr fraction32_t val1Expected { 2, 1 };
+	constexpr fraction32_t val2Expected { -83, 141 };
+	constexpr fraction32_t val3Expected { -12714, 1616795 };
+	constexpr fraction32_t val4Expected { 0, 1 };
+
+	constexpr fraction32_t val1Actual { 2 * factor, 1 * factor };
+	constexpr fraction32_t val2Actual { -83 * factor, 141 * factor };
+	constexpr fraction32_t val3Actual { -12714 * factor, 1616795 * factor };
+	constexpr fraction32_t val4Actual { 0 * factor, 1 * factor };
+
+	EXPECT_EQ( val1Expected, val1Actual );
+	EXPECT_NE( val2Expected, val1Actual );
+	EXPECT_NE( val3Expected, val1Actual );
+	EXPECT_NE( val4Expected, val1Actual );
+	EXPECT_NE( val1Expected, val2Actual );
+	EXPECT_EQ( val2Expected, val2Actual );
+	EXPECT_NE( val3Expected, val2Actual );
+	EXPECT_NE( val4Expected, val2Actual );
+	EXPECT_NE( val1Expected, val3Actual );
+	EXPECT_NE( val2Expected, val3Actual );
+	EXPECT_EQ( val3Expected, val3Actual );
+	EXPECT_NE( val4Expected, val3Actual );
+	EXPECT_NE( val1Expected, val4Actual );
+	EXPECT_NE( val2Expected, val4Actual );
+	EXPECT_NE( val3Expected, val4Actual );
+	EXPECT_EQ( val4Expected, val4Actual );
+}
+
+TEST( TEST_CASE_NAME, differentFractionTypeCopyConstructor ) {
 	constexpr fraction_t val1Expected { 2, 1 };
 	constexpr fraction_t val2Expected { -83, 141 };
 	constexpr fraction_t val3Expected { -12714, 1616795 };
