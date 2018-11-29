@@ -19,10 +19,12 @@ template<
 	class CHECK_T = typename std::enable_if<std::is_integral<T>::value>::type
 >
 class fraction {
-private:
+public:
 	// Flags
 	static constexpr bool IS_SIGNED { std::is_signed<T>::value };
+	static constexpr bool IS_UNSIGNED { std::is_unsigned<T>::value };
 
+private:
 	// Constants
 	static constexpr T ZERO { 0 };
 	static constexpr T ONE { 1 };
@@ -166,7 +168,7 @@ public:
 	// Conversion operators
 	template<
 		class D,
-		class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+		class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 	>
 	constexpr operator D() const noexcept;
 
@@ -203,14 +205,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr bool operator==( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr bool operator==( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -232,14 +234,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr bool operator!=( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr bool operator!=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -262,14 +264,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator+( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -291,14 +293,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator-( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -320,14 +322,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator*( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator*( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -349,14 +351,14 @@ template<
 	class T1,
 	class CHECK_T1,
 	class D,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator/( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
 template<
 	class D,
 	class T1,
 	class CHECK_T1,
-	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value>::type
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
@@ -373,8 +375,52 @@ std::basic_ostream<charT, traits>& operator<<( std::basic_ostream<charT, traits>
 // Traits and Limits
 ////////////////////////////////
 
-// TODO: type_traits
-// TODO: numeric_limits
+template<
+	class T
+>
+struct is_fraction : std::false_type {};
+
+template<
+	class T1,
+	class CHECK_T1
+>
+struct is_fraction<fraction<T1, CHECK_T1>> : std::true_type {};
+
+template<
+	class T
+>
+inline constexpr bool is_fraction_v = is_fraction<T>::value;
+
+namespace std {
+	template<
+		class T1,
+		class CHECK_T1
+	>
+	struct is_floating_point<fraction<T1, CHECK_T1>> : true_type {};
+
+	template<
+		class T1,
+		class CHECK_T1
+	>
+	struct is_signed<fraction<T1, CHECK_T1>> : integral_constant<bool, fraction<T1, CHECK_T1>::IS_SIGNED> {};
+	template<
+		class T1,
+		class CHECK_T1
+	>
+	struct is_unsigned<fraction<T1, CHECK_T1>> : integral_constant<bool, fraction<T1, CHECK_T1>::IS_UNSIGNED> {};
+
+	template<
+		class T1,
+		class CHECK_T1,
+		class T2,
+		class CHECK_T2
+	>
+	struct common_type<fraction<T1, CHECK_T1>, fraction<T2, CHECK_T2>> {
+		typedef fraction<typename std::common_type<T1, T2>::type> type;
+	};
+
+	// TODO: numeric_limits
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation
@@ -405,7 +451,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 
 	const bool negative = value < D{ 0 };
 
-	if constexpr ( !IS_SIGNED )
+	if constexpr ( IS_UNSIGNED )
 		if ( negative )
 			throw std::invalid_argument( "The value needs to be positive, since the base interger type is unsigned!" );
 
