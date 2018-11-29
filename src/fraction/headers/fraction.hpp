@@ -63,6 +63,12 @@ public:
 	// Fraction Contrsuctor
 	constexpr fraction( const T& numerator = ZERO, const T& denominator = ONE );
 
+	template<
+		class T1,
+		class CHECK_T1 = typename std::enable_if<!std::is_same<T, T1>::value && std::is_integral<T1>::value>::type
+	>
+	constexpr fraction( T1 numerator = T1{ 0 }, T1 denominator = T1{ 1 } );
+
 	/*!
 	 * @brief Floating Point constructor
 	 *
@@ -82,13 +88,13 @@ public:
 	 */
 	template<
 		class D,
-		class CHECK_D = typename std::enable_if<std::is_floating_point<D>::value>::type
+		class CHECK_D = typename std::enable_if<std::is_floating_point<D>::value && !is_fraction<D>::value>::type
 	>
-	constexpr fraction( const D& value, const D& precison = 0.0 );
+	constexpr fraction( const D& value, const D& precison = D{ 0 } );
 
 	template<
-		class T1 = std::int64_t,
-		class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+		class T1,
+		class CHECK_T1
 	>
 	constexpr fraction( const fraction<T1, CHECK_T1>& copy );
 
@@ -202,6 +208,12 @@ public:
 
 private:
 	constexpr void reduce();
+
+	template<
+		class T1,
+		class CHECK_T1 = typename std::enable_if<std::is_integral<T1>::value>::type
+	>
+	static constexpr void reduce(T1& numerator, T1& denominator );
 };
 
 ////////////////////////////////////////////////////
@@ -498,7 +510,9 @@ namespace std {
 template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr D fraction<T, CHECK_T>::abs( const D& value ) const noexcept {
-	if ( value < D{ 0 } )
+	static constexpr D D_ZERO { 0 };
+
+	if ( value < D_ZERO )
 		return -value;
 	else
 		return value;
@@ -512,13 +526,31 @@ inline constexpr fraction<T, CHECK_T>::fraction( const T& numerator, const T& de
 }
 
 template<class T, class CHECK_T>
+template<class T1, class CHECK_T1>
+inline constexpr fraction<T, CHECK_T>::fraction( T1 numerator, T1 denominator ) :
+	numerator {},
+	denominator {} {
+	// Reduce fraction first in native type
+	reduce( numerator, denominator );
+
+	this->numerator = static_cast<T>(numerator);
+	this->denominator = static_cast<T>(denominator);
+
+	// Numbers could be too large for T
+	reduce();
+}
+
+template<class T, class CHECK_T>
 template<class D, class CHECK_D>
 inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precison ) :
 	numerator {},
 	denominator {} {
+	static constexpr D D_ZERO { 0 };
+	static constexpr D D_ONE { 1 };
+
 	T digitT {};
 
-	const bool negative = value < D{ 0 };
+	const bool negative = value < D_ZERO;
 
 	if constexpr ( is_unsigned )
 		if ( negative )
@@ -547,7 +579,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 		if ( fraction<T, CHECK_T>::abs( (static_cast<D>(n1) / static_cast<D>(d1)) - posValue ) <= precison )
 			break;
 
-		rest = D{ 1 } / (rest - static_cast<D>(digitT));
+		rest = D_ONE / (rest - static_cast<D>(digitT));
 	}
 
 	if constexpr ( is_signed )
@@ -685,7 +717,7 @@ inline constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1, CHECK_T1>&
 
 template<class D, class T1, class CHECK_T1, class CHECK_D>
 inline constexpr fraction<T1, CHECK_T1> operator-( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
-	return fraction<T1, CHECK_T1>{ lhs } -rhs;
+	return fraction<T1, CHECK_T1>{ lhs } - rhs;
 }
 
 template<class T, class CHECK_T>
@@ -823,16 +855,24 @@ inline std::basic_ostream<charT, traits>& operator<<( std::basic_ostream<charT, 
 
 template<class T, class CHECK_T>
 inline constexpr void fraction<T, CHECK_T>::reduce() {
-	if ( denominator == ZERO )
+	reduce( numerator, denominator );
+}
+
+template<class T, class CHECK_T>
+template<class T1, class CHECK_T1>
+inline constexpr void fraction<T, CHECK_T>::reduce(T1& numerator, T1& denominator ) {
+	static constexpr T1 D_ZERO { 0 };
+
+	if ( denominator == D_ZERO )
 		throw std::invalid_argument( "The denominator must not be 0!" );
 
-	const T gcd { std::gcd( numerator, denominator ) };
+	const T1 gcd { std::gcd( numerator, denominator ) };
 
 	numerator /= gcd;
 	denominator /= gcd;
 
 	if constexpr ( is_signed ) {
-		if ( denominator < ZERO ) {
+		if ( denominator < D_ZERO ) {
 			numerator = -numerator;
 			denominator = -denominator;
 		}
