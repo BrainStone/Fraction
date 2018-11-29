@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <limits>
 #include <numeric>
 #include <ostream>
 #include <stdexcept>
@@ -394,28 +395,28 @@ template<
 struct is_fraction : std::false_type {};
 
 template<
-	class T1,
-	class CHECK_T1
+	class T,
+	class CHECK_T
 >
-struct is_fraction<fraction<T1, CHECK_T1>> : std::true_type {};
+struct is_fraction<fraction<T, CHECK_T>> : std::true_type {};
 
 namespace std {
 	template<
-		class T1,
-		class CHECK_T1
+		class T,
+		class CHECK_T
 	>
-	struct is_floating_point<fraction<T1, CHECK_T1>> : true_type {};
+	struct is_floating_point<fraction<T, CHECK_T>> : true_type {};
 
 	template<
-		class T1,
-		class CHECK_T1
+		class T,
+		class CHECK_T
 	>
-	struct is_signed<fraction<T1, CHECK_T1>> : integral_constant<bool, fraction<T1, CHECK_T1>::IS_SIGNED> {};
+	struct is_signed<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::IS_SIGNED> {};
 	template<
-		class T1,
-		class CHECK_T1
+		class T,
+		class CHECK_T
 	>
-	struct is_unsigned<fraction<T1, CHECK_T1>> : integral_constant<bool, fraction<T1, CHECK_T1>::IS_UNSIGNED> {};
+	struct is_unsigned<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::IS_UNSIGNED> {};
 
 	template<
 		class T1,
@@ -427,7 +428,48 @@ namespace std {
 		typedef fraction<typename std::common_type<T1, T2>::type> type;
 	};
 
-	// TODO: numeric_limits
+	template<
+		class T,
+		class CHECK_T
+	>
+	class numeric_limits<fraction<T, CHECK_T>> {
+		public:
+			static constexpr bool is_specialized { true };
+			static constexpr fraction<T, CHECK_T> min() noexcept;
+			static constexpr fraction<T, CHECK_T> max() noexcept;
+			static constexpr fraction<T, CHECK_T> lowest() noexcept;
+			static constexpr int digits = numeric_limits<T>::digits;
+			static constexpr int digits10 = numeric_limits<T>::digits10;
+			static constexpr bool is_signed = fraction<T, CHECK_T>::IS_SIGNED;
+			static constexpr bool is_integer = false;
+			static constexpr bool is_exact = numeric_limits<T>::is_exact;
+			static constexpr int radix = numeric_limits<T>::radix;
+			static constexpr fraction<T, CHECK_T> epsilon() noexcept;
+			static constexpr fraction<T, CHECK_T> round_error() noexcept;
+
+			static constexpr int max_exponent = 0;
+			static constexpr int max_exponent10 = 0;
+			static constexpr int min_exponent = 0;
+			static constexpr int min_exponent10 = 0;
+
+			static constexpr bool has_infinity = false;
+			static constexpr bool has_quiet_NaN = false;
+			static constexpr bool has_signaling_NaN = false;
+			static constexpr float_denorm_style has_denorm = denorm_absent;
+			static constexpr bool has_denorm_loss = false;
+			static constexpr fraction<T, CHECK_T> infinity() noexcept;
+			static constexpr fraction<T, CHECK_T> quiet_NaN() noexcept;
+			static constexpr fraction<T, CHECK_T> signaling_NaN() noexcept;
+			static constexpr fraction<T, CHECK_T> denorm_min() noexcept;
+
+			static constexpr bool is_iec559 = false;
+			static constexpr bool is_bounded = numeric_limits<T>::is_bounded;
+			static constexpr bool is_modulo = numeric_limits<T>::is_modulo;
+
+			static constexpr bool traps = false;
+			static constexpr bool tinyness_before = false;
+			static constexpr float_round_style round_style = round_to_nearest;
+	};
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -765,5 +807,52 @@ inline constexpr void fraction<T, CHECK_T>::reduce() {
 			numerator = -numerator;
 			denominator = -denominator;
 		}
+	}
+}
+
+namespace std {
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::min() noexcept {
+		return fraction<T, CHECK_T>{ numeric_limits<T>::min() };
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::max() noexcept {
+		return fraction<T, CHECK_T>{ numeric_limits<T>::max() };
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::lowest() noexcept {
+		return min();
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::epsilon() noexcept {
+		return fraction<T, CHECK_T>{ 1, numeric_limits<T>::max() };
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::round_error() noexcept {
+		return epsilon();
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::infinity() noexcept {
+		return fraction<T, CHECK_T>{};
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::quiet_NaN() noexcept {
+		return fraction<T, CHECK_T>{};
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::signaling_NaN() noexcept {
+		return fraction<T, CHECK_T>{};
+	}
+
+	template<class T, class CHECK_T>
+	constexpr fraction<T, CHECK_T> numeric_limits<fraction<T, CHECK_T>>::denorm_min() noexcept {
+		return fraction<T, CHECK_T>{};
 	}
 }
