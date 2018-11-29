@@ -35,8 +35,10 @@ template<
 class fraction {
 public:
 	// Flags
-	static constexpr bool IS_SIGNED { std::is_signed<T>::value };
-	static constexpr bool IS_UNSIGNED { std::is_unsigned<T>::value };
+	static constexpr bool is_signed { std::is_signed<T>::value };
+	static constexpr bool is_unsigned { std::is_unsigned<T>::value };
+
+	typedef T value_type;
 
 private:
 	// Constants
@@ -411,12 +413,12 @@ namespace std {
 		class T,
 		class CHECK_T
 	>
-	struct is_signed<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::IS_SIGNED> {};
+	struct is_signed<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::is_signed> {};
 	template<
 		class T,
 		class CHECK_T
 	>
-	struct is_unsigned<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::IS_UNSIGNED> {};
+	struct is_unsigned<fraction<T, CHECK_T>> : integral_constant<bool, fraction<T, CHECK_T>::is_unsigned> {};
 
 	template<
 		class T1,
@@ -440,7 +442,7 @@ namespace std {
 			static constexpr fraction<T, CHECK_T> lowest() noexcept;
 			static constexpr int digits = numeric_limits<T>::digits;
 			static constexpr int digits10 = numeric_limits<T>::digits10;
-			static constexpr bool is_signed = fraction<T, CHECK_T>::IS_SIGNED;
+			static constexpr bool is_signed = fraction<T, CHECK_T>::is_signed;
 			static constexpr bool is_integer = false;
 			static constexpr bool is_exact = numeric_limits<T>::is_exact;
 			static constexpr int radix = numeric_limits<T>::radix;
@@ -501,7 +503,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 
 	const bool negative = value < D{ 0 };
 
-	if constexpr ( IS_UNSIGNED )
+	if constexpr ( is_unsigned )
 		if ( negative )
 			throw std::invalid_argument( "The value needs to be positive, since the base interger type is unsigned!" );
 
@@ -531,7 +533,7 @@ inline constexpr fraction<T, CHECK_T>::fraction( const D& value, const D& precis
 		rest = D{ 1 } / (rest - static_cast<D>(digitT));
 	}
 
-	if constexpr ( IS_SIGNED )
+	if constexpr ( is_signed )
 		numerator = negative ? -n1 : n1;
 	else
 		numerator = n1;
@@ -802,7 +804,7 @@ inline constexpr void fraction<T, CHECK_T>::reduce() {
 	numerator /= gcd;
 	denominator /= gcd;
 
-	if constexpr ( IS_SIGNED ) {
+	if constexpr ( is_signed ) {
 		if ( denominator < ZERO ) {
 			numerator = -numerator;
 			denominator = -denominator;
