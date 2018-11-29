@@ -193,7 +193,7 @@ TEST( TEST_CASE_NAME, floatingPointConstructor ) {
 	EXPECT_EQ( val4Expected, val4 );
 }
 
-TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
+TEST( TEST_CASE_NAME, differentTypeConstructor ) {
 	constexpr std::int64_t factor { std::numeric_limits<std::int32_t>::max() };
 
 	constexpr fraction32_t val1Expected { 2, 1 };

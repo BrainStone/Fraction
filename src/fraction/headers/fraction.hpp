@@ -125,10 +125,41 @@ public:
 	template<class D, class T1, class CHECK_T1, class CHECK_D>
 	friend constexpr bool operator!=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
-	// TODO: operator<
-	// TODO: operator>
-	// TODO: operator<=
-	// TODO: operator>=
+	template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+	friend constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+	template<class T1, class CHECK_T1, class D, class CHECK_D>
+	friend constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator<( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+	template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+	friend constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+	template<class T1, class CHECK_T1, class D, class CHECK_D>
+	friend constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator>( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+	template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+	friend constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+	template<class T1, class CHECK_T1, class D, class CHECK_D>
+	friend constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator<=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+	template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+	friend constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+	template<class T1, class CHECK_T1>
+	friend constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+	template<class T1, class CHECK_T1, class D, class CHECK_D>
+	friend constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+	template<class D, class T1, class CHECK_T1, class CHECK_D>
+	friend constexpr bool operator>=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
 	// Arithmetic operators
 
@@ -278,6 +309,125 @@ template<
 	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr bool operator!=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+template<
+	class T1,
+	class CHECK_T1,
+	class T2,
+	class CHECK_T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_COMMON = typename std::enable_if<!std::is_same<T1, T2>::value && std::is_integral<COMMON>::value>::type
+>
+constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+/**
+ * Taken and adapted from https://stackoverflow.com/a/13334474/1996022
+ */
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+template<
+	class T1,
+	class CHECK_T1,
+	class D,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator<( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+template<
+	class T1,
+	class CHECK_T1,
+	class T2,
+	class CHECK_T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_COMMON = typename std::enable_if<!std::is_same<T1, T2>::value && std::is_integral<COMMON>::value>::type
+>
+constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+template<
+	class T1,
+	class CHECK_T1,
+	class D,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator>( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+template<
+	class T1,
+	class CHECK_T1,
+	class T2,
+	class CHECK_T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_COMMON = typename std::enable_if<!std::is_same<T1, T2>::value && std::is_integral<COMMON>::value>::type
+>
+constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+template<
+	class T1,
+	class CHECK_T1,
+	class D,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator<=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+template<
+	class T1,
+	class CHECK_T1,
+	class T2,
+	class CHECK_T2,
+	class COMMON = typename std::common_type<T1, T2>::type,
+	class CHECK_COMMON = typename std::enable_if<!std::is_same<T1, T2>::value && std::is_integral<COMMON>::value>::type
+>
+constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs );
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept;
+template<
+	class T1,
+	class CHECK_T1,
+	class D,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const D& rhs );
+template<
+	class D,
+	class T1,
+	class CHECK_T1,
+	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
+>
+constexpr bool operator>=( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
 
 // Arithmetic operators
 template<
@@ -642,6 +792,123 @@ inline constexpr bool operator!=( const fraction<T1, CHECK_T1>& lhs, const D & r
 template<class D, class T1, class CHECK_T1, class CHECK_D>
 inline constexpr bool operator!=( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
 	return rhs != lhs;
+}
+
+template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+inline constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs ) {
+	return fraction<COMMON, CHECK_COMMON>{ lhs } < fraction<COMMON, CHECK_COMMON>{ rhs };
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept {
+	constexpr T1 T1_ZERO { 0 };
+
+	T1 numerator_lhs { lhs.numerator };
+	T1 denominator_lhs { lhs.denominator };
+	T1 numerator_rhs { rhs.numerator };
+	T1 denominator_rhs { rhs.denominator };
+
+	T1 divison_lhs {};
+	T1 divison_rhs {};
+
+	bool flag { true };
+
+	while ( true ) {
+		divison_lhs = numerator_lhs / denominator_lhs;
+		divison_rhs = numerator_rhs / denominator_rhs;
+
+		if ( divison_lhs < divison_rhs ) return flag;
+		if ( divison_lhs > divison_rhs ) return !flag;
+
+		// Use divison_lhs and divison_rhs as temporary variables
+		divison_lhs = numerator_lhs;
+		numerator_lhs = denominator_lhs;
+		denominator_lhs = divison_lhs % denominator_lhs;
+
+		divison_rhs = numerator_rhs;
+		numerator_rhs = denominator_rhs;
+		denominator_rhs = divison_rhs % denominator_rhs;
+
+		if ( flag ) {
+			if ( denominator_rhs == T1_ZERO ) return false;
+			if ( denominator_lhs == T1_ZERO ) return true;
+		} else {
+			if ( denominator_lhs == T1_ZERO ) return false;
+			if ( denominator_rhs == T1_ZERO ) return true;
+		}
+
+		flag = !flag;
+	}
+}
+
+template<class T1, class CHECK_T1, class D, class CHECK_D>
+inline constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const D & rhs ) {
+	return lhs < fraction<T1, CHECK_T1>{ rhs };
+}
+
+template<class D, class T1, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator<( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
+	return fraction<T1, CHECK_T1>{ lhs } < rhs;
+}
+
+template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+inline constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs ) {
+	return rhs < lhs;
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept {
+	return rhs < lhs;
+}
+
+template<class T1, class CHECK_T1, class D, class CHECK_D>
+inline constexpr bool operator>( const fraction<T1, CHECK_T1>& lhs, const D & rhs ) {
+	return rhs < lhs;
+}
+
+template<class D, class T1, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator>( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
+	return rhs < lhs;
+}
+
+template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+inline constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs ) {
+	return !(lhs > rhs);
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept {
+	return !(lhs > rhs);
+}
+
+template<class T1, class CHECK_T1, class D, class CHECK_D>
+inline constexpr bool operator<=( const fraction<T1, CHECK_T1>& lhs, const D & rhs ) {
+	return !(lhs > rhs);
+}
+
+template<class D, class T1, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator<=( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
+	return !(lhs > rhs);
+}
+
+template<class T1, class CHECK_T1, class T2, class CHECK_T2, class COMMON, class CHECK_COMMON>
+inline constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T2, CHECK_T2>& rhs ) {
+	return !(lhs > rhs);
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const fraction<T1, CHECK_T1>& rhs ) noexcept {
+	return !(lhs < rhs);
+}
+
+template<class T1, class CHECK_T1, class D, class CHECK_D>
+inline constexpr bool operator>=( const fraction<T1, CHECK_T1>& lhs, const D & rhs ) {
+	return !(lhs < rhs);
+}
+
+template<class D, class T1, class CHECK_T1, class CHECK_D>
+inline constexpr bool operator>=( const D & lhs, const fraction<T1, CHECK_T1>& rhs ) {
+	return !(lhs < rhs);
 }
 
 template<class T, class CHECK_T>

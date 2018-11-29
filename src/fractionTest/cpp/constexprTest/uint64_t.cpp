@@ -163,6 +163,87 @@ TEST( TEST_CASE_NAME, reductionEquals ) {
 	EXPECT_EQ( val4Reduced, val4 );
 }
 
+TEST( TEST_CASE_NAME, lessThan ) {
+	constexpr ufraction_t val1 { 2, 1 };
+	constexpr ufraction_t val2 { 83, 141 };
+	constexpr ufraction_t val3 { 12714, 1616795 };
+	constexpr ufraction_t val4 { 0, 1 };
+
+	constexpr ufraction_t val5 { 2, 5 };
+	constexpr ufraction_t val6 { 1, 2 };
+
+	EXPECT_LT( val2, val1 );
+	EXPECT_LT( val3, val1 );
+	EXPECT_LT( val4, val1 );
+	EXPECT_LT( val3, val2 );
+	EXPECT_LT( val4, val2 );
+	EXPECT_LT( val4, val3 );
+
+	EXPECT_LT( val5, val6 );
+
+	EXPECT_FALSE( val1 < val1 );
+	EXPECT_FALSE( val2 < val2 );
+	EXPECT_FALSE( val3 < val3 );
+	EXPECT_FALSE( val4 < val4 );
+}
+
+TEST( TEST_CASE_NAME, greaterThan ) {
+	constexpr ufraction_t val1 { 2, 1 };
+	constexpr ufraction_t val2 { 83, 141 };
+	constexpr ufraction_t val3 { 12714, 1616795 };
+	constexpr ufraction_t val4 { 0, 1 };
+
+	EXPECT_GT( val1, val2 );
+	EXPECT_GT( val1, val3 );
+	EXPECT_GT( val1, val4 );
+	EXPECT_GT( val2, val3 );
+	EXPECT_GT( val2, val4 );
+	EXPECT_GT( val3, val4 );
+
+	EXPECT_FALSE( val1 > val1 );
+	EXPECT_FALSE( val2 > val2 );
+	EXPECT_FALSE( val3 > val3 );
+	EXPECT_FALSE( val4 > val4 );
+}
+
+TEST( TEST_CASE_NAME, lessThanOrEquals ) {
+	constexpr ufraction_t val1 { 2, 1 };
+	constexpr ufraction_t val2 { 83, 141 };
+	constexpr ufraction_t val3 { 12714, 1616795 };
+	constexpr ufraction_t val4 { 0, 1 };
+
+	EXPECT_LE( val2, val1 );
+	EXPECT_LE( val3, val1 );
+	EXPECT_LE( val4, val1 );
+	EXPECT_LE( val3, val2 );
+	EXPECT_LE( val4, val2 );
+	EXPECT_LE( val4, val3 );
+
+	EXPECT_TRUE( val1 <= val1 );
+	EXPECT_TRUE( val2 <= val2 );
+	EXPECT_TRUE( val3 <= val3 );
+	EXPECT_TRUE( val4 <= val4 );
+}
+
+TEST( TEST_CASE_NAME, greaterThanOrEquals ) {
+	constexpr ufraction_t val1 { 2, 1 };
+	constexpr ufraction_t val2 { 83, 141 };
+	constexpr ufraction_t val3 { 12714, 1616795 };
+	constexpr ufraction_t val4 { 0, 1 };
+
+	EXPECT_GE( val1, val2 );
+	EXPECT_GE( val1, val3 );
+	EXPECT_GE( val1, val4 );
+	EXPECT_GE( val2, val3 );
+	EXPECT_GE( val2, val4 );
+	EXPECT_GE( val3, val4 );
+
+	EXPECT_TRUE( val1 >= val1 );
+	EXPECT_TRUE( val2 >= val2 );
+	EXPECT_TRUE( val3 >= val3 );
+	EXPECT_TRUE( val4 >= val4 );
+}
+
 TEST( TEST_CASE_NAME, floatingPointConstructor ) {
 	constexpr ufraction_t val1 { 2.0 };
 	constexpr ufraction_t val2 { 0.588652482269503546099290780141843971 };
@@ -196,7 +277,7 @@ TEST( TEST_CASE_NAME, negativeFloatingPointConstructor ) {
 	EXPECT_THROW( ufraction_t( -1.0 ), std::invalid_argument );
 }
 
-TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
+TEST( TEST_CASE_NAME, differentTypeConstructor ) {
 	constexpr std::uint64_t factor { std::numeric_limits<std::uint32_t>::max() };
 
 	constexpr ufraction32_t val1Expected { 2, 1 };
