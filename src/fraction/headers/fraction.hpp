@@ -181,6 +181,12 @@ public:
 	constexpr fraction<T, CHECK_T>& operator--();
 	constexpr fraction<T, CHECK_T> operator--( int );
 
+
+	template<class T1, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1, CHECK_T1>& rhs ) noexcept;
+	template<class T1, class CHECK_T1>
+	friend constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1, CHECK_T1>& rhs );
+
 	// Conversion operators
 	template<
 		class D,
@@ -377,6 +383,17 @@ template<
 	class CHECK_D = typename std::enable_if<std::is_arithmetic<D>::value && !is_fraction<D>::value>::type
 >
 constexpr fraction<T1, CHECK_T1> operator/( const D& lhs, const fraction<T1, CHECK_T1>& rhs );
+
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1, CHECK_T1>& rhs ) noexcept;
+template<
+	class T1,
+	class CHECK_T1
+>
+constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1, CHECK_T1>& rhs );
 
 // Stream operators
 template<
@@ -779,6 +796,16 @@ inline constexpr fraction<T, CHECK_T> fraction<T, CHECK_T>::operator--( int ) {
 	operator--();
 
 	return copy;
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator+( const fraction<T1, CHECK_T1>& rhs ) noexcept {
+	return fraction<T1, CHECK_T1>{ rhs };
+}
+
+template<class T1, class CHECK_T1>
+inline constexpr fraction<T1, CHECK_T1> operator-( const fraction<T1, CHECK_T1>& rhs ) {
+	return fraction<T1, CHECK_T1>{ -rhs.numerator, rhs.denominator };
 }
 
 template<class T, class CHECK_T>
