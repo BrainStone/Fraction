@@ -2,19 +2,11 @@
 // Copyright (c) 2018 Yannick Schinko
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 //
-#include <climits>
-
 #include <gtest/gtest.h>
 
-#include "fraction.hpp"
+#include "defines.hpp"
 
 #define TEST_CASE_NAME numeric_limitsTest
-
-using fraction_t = fraction<std::int64_t>;
-using ufraction_t = fraction<std::uint64_t>;
-
-using fraction32_t = fraction<std::int32_t>;
-using ufraction32_t = fraction<std::uint32_t>;
 
 TEST( TEST_CASE_NAME, is_specialized ) {
 	EXPECT_TRUE( std::numeric_limits<fraction_t>::is_specialized );

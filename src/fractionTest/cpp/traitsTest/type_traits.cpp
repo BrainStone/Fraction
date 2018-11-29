@@ -4,15 +4,9 @@
 //
 #include <gtest/gtest.h>
 
-#include "fraction.hpp"
+#include "defines.hpp"
 
 #define TEST_CASE_NAME type_traitsTest
-
-using fraction_t = fraction<std::int64_t>;
-using ufraction_t = fraction<std::uint64_t>;
-
-using fraction32_t = fraction<std::int32_t>;
-using ufraction32_t = fraction<std::uint32_t>;
 
 TEST( TEST_CASE_NAME, is_fraction ) {
 	EXPECT_TRUE( is_fraction<fraction_t>::value );

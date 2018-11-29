@@ -6,14 +6,12 @@
 
 #include <gtest/gtest.h>
 
-#include "fraction.hpp"
+#include "defines.hpp"
 
 #define TEST_CASE_NAME ConstexprTest_int64_t
 
-using fraction_t = fraction<std::int64_t>;
-
 TEST( TEST_CASE_NAME, zeroExcpetion ) {
-	EXPECT_THROW( fraction_t( 0, 0 ), std::invalid_argument );
+	EXPECT_THROW( ufraction_t( 0, 0 ), std::invalid_argument );
 }
 
 TEST( TEST_CASE_NAME, equals ) {
@@ -52,10 +50,10 @@ TEST( TEST_CASE_NAME, differentFractionTypeEquals ) {
 	constexpr fraction_t val3Expected { -12714, 1616795 };
 	constexpr fraction_t val4Expected { 0, 1 };
 
-	constexpr fraction<std::int32_t> val1Actual { 2, 1 };
-	constexpr fraction<std::int32_t> val2Actual { -83, 141 };
-	constexpr fraction<std::int32_t> val3Actual { -12714, 1616795 };
-	constexpr fraction<std::int32_t> val4Actual { 0, 1 };
+	constexpr fraction32_t val1Actual { 2, 1 };
+	constexpr fraction32_t val2Actual { -83, 141 };
+	constexpr fraction32_t val3Actual { -12714, 1616795 };
+	constexpr fraction32_t val4Actual { 0, 1 };
 
 	EXPECT_EQ( val1Expected, val1Actual );
 	EXPECT_NE( val2Expected, val1Actual );
@@ -201,10 +199,10 @@ TEST( TEST_CASE_NAME, differentTypeCopyConstructor ) {
 	constexpr fraction_t val3Expected { -12714, 1616795 };
 	constexpr fraction_t val4Expected { 0, 1 };
 
-	constexpr fraction<std::int32_t> val1Actual_int32_t { 2, 1 };
-	constexpr fraction<std::int32_t> val2Actual_int32_t { -83, 141 };
-	constexpr fraction<std::int32_t> val3Actual_int32_t { -12714, 1616795 };
-	constexpr fraction<std::int32_t> val4Actual_int32_t { 0, 1 };
+	constexpr fraction32_t val1Actual_int32_t { 2, 1 };
+	constexpr fraction32_t val2Actual_int32_t { -83, 141 };
+	constexpr fraction32_t val3Actual_int32_t { -12714, 1616795 };
+	constexpr fraction32_t val4Actual_int32_t { 0, 1 };
 
 	constexpr fraction_t val1Actual { val1Actual_int32_t };
 	constexpr fraction_t val2Actual { val2Actual_int32_t };
@@ -235,10 +233,10 @@ TEST( TEST_CASE_NAME, differentFractionTypeConversion ) {
 	constexpr fraction_t val3Expected { -12714, 1616795 };
 	constexpr fraction_t val4Expected { 0, 1 };
 
-	constexpr fraction<std::int32_t> val1Actual_int32_t { 2, 1 };
-	constexpr fraction<std::int32_t> val2Actual_int32_t { -83, 141 };
-	constexpr fraction<std::int32_t> val3Actual_int32_t { -12714, 1616795 };
-	constexpr fraction<std::int32_t> val4Actual_int32_t { 0, 1 };
+	constexpr fraction32_t val1Actual_int32_t { 2, 1 };
+	constexpr fraction32_t val2Actual_int32_t { -83, 141 };
+	constexpr fraction32_t val3Actual_int32_t { -12714, 1616795 };
+	constexpr fraction32_t val4Actual_int32_t { 0, 1 };
 
 	constexpr fraction_t val1Actual { static_cast<fraction_t>(val1Actual_int32_t) };
 	constexpr fraction_t val2Actual { static_cast<fraction_t>(val2Actual_int32_t) };
@@ -343,10 +341,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesAddition ) {
 
 	constexpr fraction_t val1AdditionLhs { 1, 2 };
 	constexpr fraction_t val2AdditionLhs { 7899, 1235 };
-	constexpr fraction<std::int32_t> val3AdditionLhs { -4565, 5464 };
-	constexpr fraction<std::int32_t> val4AdditionLhs { 1, 1 };
-	constexpr fraction<std::int32_t> val1AdditionRhs { 3, 2 };
-	constexpr fraction<std::int32_t> val2AdditionRhs { -1216264, 174135 };
+	constexpr fraction32_t val3AdditionLhs { -4565, 5464 };
+	constexpr fraction32_t val4AdditionLhs { 1, 1 };
+	constexpr fraction32_t val1AdditionRhs { 3, 2 };
+	constexpr fraction32_t val2AdditionRhs { -1216264, 174135 };
 	constexpr fraction_t val3AdditionRhs { 7311199879, 8834167880 };
 	constexpr fraction_t val4AdditionRhs { -1, 1 };
 
@@ -457,10 +455,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesSubtraction ) {
 
 	constexpr fraction_t val1SubtractionLhs { 1, 2 };
 	constexpr fraction_t val2SubtractionLhs { 7899, 1235 };
-	constexpr fraction<std::int32_t> val3SubtractionLhs { -4565, 5464 };
-	constexpr fraction<std::int32_t> val4SubtractionLhs { 1, 1 };
-	constexpr fraction<std::int32_t> val1SubtractionRhs { -3, 2 };
-	constexpr fraction<std::int32_t> val2SubtractionRhs { 1216264, 174135 };
+	constexpr fraction32_t val3SubtractionLhs { -4565, 5464 };
+	constexpr fraction32_t val4SubtractionLhs { 1, 1 };
+	constexpr fraction32_t val1SubtractionRhs { -3, 2 };
+	constexpr fraction32_t val2SubtractionRhs { 1216264, 174135 };
 	constexpr fraction_t val3SubtractionRhs { -7311199879, 8834167880 };
 	constexpr fraction_t val4SubtractionRhs { 1, 1 };
 
@@ -571,10 +569,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesMultiplication ) {
 
 	constexpr fraction_t val1MultiplicationLhs { -1, 2 };
 	constexpr fraction_t val2MultiplicationLhs { 7899, 1235 };
-	constexpr fraction<std::int32_t> val3MultiplicationLhs { 5, 1 };
-	constexpr fraction<std::int32_t> val4MultiplicationLhs { 5686, 78 };
-	constexpr fraction<std::int32_t> val1MultiplicationRhs { -4, 1 };
-	constexpr fraction<std::int32_t> val2MultiplicationRhs { -102505, 1113759 };
+	constexpr fraction32_t val3MultiplicationLhs { 5, 1 };
+	constexpr fraction32_t val4MultiplicationLhs { 5686, 78 };
+	constexpr fraction32_t val1MultiplicationRhs { -4, 1 };
+	constexpr fraction32_t val2MultiplicationRhs { -102505, 1113759 };
 	constexpr fraction_t val3MultiplicationRhs { -12714, 8083975 };
 	constexpr fraction_t val4MultiplicationRhs { 0, 1 };
 
@@ -685,10 +683,10 @@ TEST( TEST_CASE_NAME, differentFractionTypesDivision ) {
 
 	constexpr fraction_t val1DivisionLhs { -1, 2 };
 	constexpr fraction_t val2DivisionLhs { 7899, 1235 };
-	constexpr fraction<std::int32_t> val3DivisionLhs { 5, 1 };
-	constexpr fraction<std::int32_t> val4DivisionLhs { 0, 78 };
-	constexpr fraction<std::int32_t> val1DivisionRhs { -1, 4 };
-	constexpr fraction<std::int32_t> val2DivisionRhs { 1113759 , -102505 };
+	constexpr fraction32_t val3DivisionLhs { 5, 1 };
+	constexpr fraction32_t val4DivisionLhs { 0, 78 };
+	constexpr fraction32_t val1DivisionRhs { -1, 4 };
+	constexpr fraction32_t val2DivisionRhs { 1113759 , -102505 };
 	constexpr fraction_t val3DivisionRhs { -8083975 , 12714 };
 	constexpr fraction_t val4DivisionRhs { 5, 1 };
 
