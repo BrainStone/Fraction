@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 #include "defines.hpp"
-#include "rngTest\rngUtils.hpp"
+#include "rngTest/rngUtils.hpp"
 
 #define TEST_CASE_NAME RNGTest_uint64_t
 

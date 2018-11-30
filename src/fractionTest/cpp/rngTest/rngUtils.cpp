@@ -2,7 +2,7 @@
 // Copyright (c) 2018 Yannick Schinko
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 //
-#include "rngTest\rngUtils.hpp"
+#include "rngTest/rngUtils.hpp"
 
 std::default_random_engine rng { 0 };
 
