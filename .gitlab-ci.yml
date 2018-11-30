@@ -1,8 +1,8 @@
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-  LONG_TESTING: true
-  GTEST_REPEAT: 10
-  GTEST_SHUFFLE: 1
+  GIT_SUBMODULE_STRATEGY: "recursive"
+  LONG_TESTING: "true"
+  GTEST_REPEAT: "2"
+  GTEST_SHUFFLE: "1"
 
 stages:
 - build
