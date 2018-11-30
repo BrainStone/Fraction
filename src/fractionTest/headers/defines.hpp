@@ -2,6 +2,8 @@
 // Copyright (c) 2018 Yannick Schinko
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 //
+#pragma once
+
 #include "fraction.hpp"
 
 using fraction_t = fraction<std::int64_t>;

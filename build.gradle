@@ -121,6 +121,10 @@ model {
                 cppCompiler.args "-pthread"
                 linker.args "-pthread"
             }
+
+            if ( "$System.env.LONG_TESTING" == "true" ) {
+                cppCompiler.define "LONG_TESTING"
+            }
         }
     }
 }
