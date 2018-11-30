@@ -812,6 +812,17 @@ inline constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fracti
 	T1 divison_rhs {};
 
 	bool flag { true };
+	bool negative { false };
+
+	if constexpr ( fraction<T1, CHECK_T1>::is_signed ) {
+		const bool lhsNegative { numerator_lhs < T1_ZERO };
+		const bool rhsNegative { numerator_rhs < T1_ZERO };
+
+		if ( lhsNegative && !rhsNegative ) return true;
+		if ( !lhsNegative && rhsNegative ) return false;
+
+		negative = lhsNegative && rhsNegative;
+	}
 
 	while ( true ) {
 		divison_lhs = numerator_lhs / denominator_lhs;
@@ -829,7 +840,7 @@ inline constexpr bool operator<( const fraction<T1, CHECK_T1>& lhs, const fracti
 		numerator_rhs = denominator_rhs;
 		denominator_rhs = divison_rhs % denominator_rhs;
 
-		if ( flag ) {
+		if ( negative ^ flag ) {
 			if ( denominator_rhs == T1_ZERO ) return false;
 			if ( denominator_lhs == T1_ZERO ) return true;
 		} else {

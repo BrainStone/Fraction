@@ -11,7 +11,7 @@
 #define TEST_CASE_NAME ConstexprTest_int64_t
 
 TEST( TEST_CASE_NAME, zeroExcpetion ) {
-	EXPECT_THROW( ufraction_t( 0, 0 ), std::invalid_argument );
+	EXPECT_THROW( fraction_t( 0, 0 ), std::invalid_argument );
 }
 
 TEST( TEST_CASE_NAME, equals ) {
@@ -162,6 +162,166 @@ TEST( TEST_CASE_NAME, reductionEquals ) {
 	EXPECT_NE( val2Reduced, val4 );
 	EXPECT_NE( val3Reduced, val4 );
 	EXPECT_EQ( val4Reduced, val4 );
+}
+
+TEST( TEST_CASE_NAME, lessThan ) {
+	constexpr fraction_t val1 { std::numeric_limits<fraction_t>::max() };
+	constexpr fraction_t val2 { 2, 1 };
+	constexpr fraction_t val3 { std::numeric_limits<fraction_t>::epsilon() };
+	constexpr fraction_t val4 { 0, 1 };
+	constexpr fraction_t val5 { -12714, 1616795 };
+	constexpr fraction_t val6 { -83, 141 };
+	constexpr fraction_t val7 { std::numeric_limits<fraction_t>::min() };
+
+	EXPECT_LT( val2, val1 );
+	EXPECT_LT( val3, val1 );
+	EXPECT_LT( val4, val1 );
+	EXPECT_LT( val5, val1 );
+	EXPECT_LT( val6, val1 );
+	EXPECT_LT( val7, val1 );
+	EXPECT_LT( val3, val2 );
+	EXPECT_LT( val4, val2 );
+	EXPECT_LT( val5, val2 );
+	EXPECT_LT( val6, val2 );
+	EXPECT_LT( val7, val2 );
+	EXPECT_LT( val4, val3 );
+	EXPECT_LT( val5, val3 );
+	EXPECT_LT( val6, val3 );
+	EXPECT_LT( val7, val3 );
+	EXPECT_LT( val5, val4 );
+	EXPECT_LT( val6, val4 );
+	EXPECT_LT( val7, val4 );
+	EXPECT_LT( val6, val5 );
+	EXPECT_LT( val7, val5 );
+	EXPECT_LT( val7, val6 );
+
+	EXPECT_FALSE( val1 < val1 );
+	EXPECT_FALSE( val2 < val2 );
+	EXPECT_FALSE( val3 < val3 );
+	EXPECT_FALSE( val4 < val4 );
+	EXPECT_FALSE( val5 < val5 );
+	EXPECT_FALSE( val6 < val6 );
+	EXPECT_FALSE( val7 < val7 );
+}
+
+TEST( TEST_CASE_NAME, greaterThan ) {
+	constexpr fraction_t val1 { std::numeric_limits<fraction_t>::max() };
+	constexpr fraction_t val2 { 2, 1 };
+	constexpr fraction_t val3 { std::numeric_limits<fraction_t>::epsilon() };
+	constexpr fraction_t val4 { 0, 1 };
+	constexpr fraction_t val5 { -12714, 1616795 };
+	constexpr fraction_t val6 { -83, 141 };
+	constexpr fraction_t val7 { std::numeric_limits<fraction_t>::min() };
+
+	EXPECT_GT( val1, val2 );
+	EXPECT_GT( val1, val3 );
+	EXPECT_GT( val1, val4 );
+	EXPECT_GT( val1, val5 );
+	EXPECT_GT( val1, val6 );
+	EXPECT_GT( val1, val7 );
+	EXPECT_GT( val2, val3 );
+	EXPECT_GT( val2, val4 );
+	EXPECT_GT( val2, val5 );
+	EXPECT_GT( val2, val6 );
+	EXPECT_GT( val2, val7 );
+	EXPECT_GT( val3, val4 );
+	EXPECT_GT( val3, val5 );
+	EXPECT_GT( val3, val6 );
+	EXPECT_GT( val3, val7 );
+	EXPECT_GT( val4, val5 );
+	EXPECT_GT( val4, val6 );
+	EXPECT_GT( val4, val7 );
+	EXPECT_GT( val5, val6 );
+	EXPECT_GT( val5, val6 );
+	EXPECT_GT( val6, val7 );
+
+	EXPECT_FALSE( val1 > val1 );
+	EXPECT_FALSE( val2 > val2 );
+	EXPECT_FALSE( val3 > val3 );
+	EXPECT_FALSE( val4 > val4 );
+	EXPECT_FALSE( val5 > val5 );
+	EXPECT_FALSE( val6 > val6 );
+	EXPECT_FALSE( val7 > val7 );
+}
+
+TEST( TEST_CASE_NAME, lessThanOrEquals ) {
+	constexpr fraction_t val1 { std::numeric_limits<fraction_t>::max() };
+	constexpr fraction_t val2 { 2, 1 };
+	constexpr fraction_t val3 { std::numeric_limits<fraction_t>::epsilon() };
+	constexpr fraction_t val4 { 0, 1 };
+	constexpr fraction_t val5 { -12714, 1616795 };
+	constexpr fraction_t val6 { -83, 141 };
+	constexpr fraction_t val7 { std::numeric_limits<fraction_t>::min() };
+
+	EXPECT_LE( val2, val1 );
+	EXPECT_LE( val3, val1 );
+	EXPECT_LE( val4, val1 );
+	EXPECT_LE( val5, val1 );
+	EXPECT_LE( val6, val1 );
+	EXPECT_LE( val7, val1 );
+	EXPECT_LE( val3, val2 );
+	EXPECT_LE( val4, val2 );
+	EXPECT_LE( val5, val2 );
+	EXPECT_LE( val6, val2 );
+	EXPECT_LE( val7, val2 );
+	EXPECT_LE( val4, val3 );
+	EXPECT_LE( val5, val3 );
+	EXPECT_LE( val6, val3 );
+	EXPECT_LE( val7, val3 );
+	EXPECT_LE( val5, val4 );
+	EXPECT_LE( val6, val4 );
+	EXPECT_LE( val7, val4 );
+	EXPECT_LE( val6, val5 );
+	EXPECT_LE( val7, val5 );
+	EXPECT_LE( val7, val6 );
+
+	EXPECT_TRUE( val1 <= val1 );
+	EXPECT_TRUE( val2 <= val2 );
+	EXPECT_TRUE( val3 <= val3 );
+	EXPECT_TRUE( val4 <= val4 );
+	EXPECT_TRUE( val5 <= val5 );
+	EXPECT_TRUE( val6 <= val6 );
+	EXPECT_TRUE( val7 <= val7 );
+}
+
+TEST( TEST_CASE_NAME, greaterThanOrEquals ) {
+	constexpr fraction_t val1 { std::numeric_limits<fraction_t>::max() };
+	constexpr fraction_t val2 { 2, 1 };
+	constexpr fraction_t val3 { std::numeric_limits<fraction_t>::epsilon() };
+	constexpr fraction_t val4 { 0, 1 };
+	constexpr fraction_t val5 { -12714, 1616795 };
+	constexpr fraction_t val6 { -83, 141 };
+	constexpr fraction_t val7 { std::numeric_limits<fraction_t>::min() };
+
+	EXPECT_GE( val1, val2 );
+	EXPECT_GE( val1, val3 );
+	EXPECT_GE( val1, val4 );
+	EXPECT_GE( val1, val5 );
+	EXPECT_GE( val1, val6 );
+	EXPECT_GE( val1, val7 );
+	EXPECT_GE( val2, val3 );
+	EXPECT_GE( val2, val4 );
+	EXPECT_GE( val2, val5 );
+	EXPECT_GE( val2, val6 );
+	EXPECT_GE( val2, val7 );
+	EXPECT_GE( val3, val4 );
+	EXPECT_GE( val3, val5 );
+	EXPECT_GE( val3, val6 );
+	EXPECT_GE( val3, val7 );
+	EXPECT_GE( val4, val5 );
+	EXPECT_GE( val4, val6 );
+	EXPECT_GE( val4, val7 );
+	EXPECT_GE( val5, val6 );
+	EXPECT_GE( val5, val6 );
+	EXPECT_GE( val6, val7 );
+
+	EXPECT_TRUE( val1 >= val1 );
+	EXPECT_TRUE( val2 >= val2 );
+	EXPECT_TRUE( val3 >= val3 );
+	EXPECT_TRUE( val4 >= val4 );
+	EXPECT_TRUE( val5 >= val5 );
+	EXPECT_TRUE( val6 >= val6 );
+	EXPECT_TRUE( val7 >= val7 );
 }
 
 TEST( TEST_CASE_NAME, floatingPointConstructor ) {

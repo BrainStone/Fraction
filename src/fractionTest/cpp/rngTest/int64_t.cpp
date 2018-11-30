@@ -9,3 +9,167 @@
 
 #define TEST_CASE_NAME RNGTest_int64_t
 
+TEST( TEST_CASE_NAME, lessThan ) {
+	// First 4 bytes of MD5 hash of test name
+	constexpr seed_type seed { 0x780e005c };
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction_t val1 { nextInt64NoZero(), nextInt64() };
+		const fraction_t val2 { nextInt64NoZero(), nextInt64() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double < val2Double ) {
+			EXPECT_LT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
+		} else if ( val2Double < val1Double ) {
+			EXPECT_LT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction32_t val1 { nextInt32NoZero(), nextInt32() };
+		const fraction32_t val2 { nextInt32NoZero(), nextInt32() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double < val2Double ) {
+			EXPECT_LT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
+		} else if ( val2Double < val1Double ) {
+			EXPECT_LT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+}
+
+TEST( TEST_CASE_NAME, greaterThan ) {
+	// First 4 bytes of MD5 hash of test name
+	constexpr seed_type seed { 0x6d86bbcb };
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction_t val1 { nextInt64NoZero(), nextInt64() };
+		const fraction_t val2 { nextInt64NoZero(), nextInt64() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double > val2Double ) {
+			EXPECT_GT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
+		} else if ( val2Double > val1Double ) {
+			EXPECT_GT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction32_t val1 { nextInt32NoZero(), nextInt32() };
+		const fraction32_t val2 { nextInt32NoZero(), nextInt32() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double > val2Double ) {
+			EXPECT_GT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
+		} else if ( val2Double > val1Double ) {
+			EXPECT_GT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+}
+
+TEST( TEST_CASE_NAME, lessThanOrEquals ) {
+	// First 4 bytes of MD5 hash of test name
+	constexpr seed_type seed { 0x688899ca };
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction_t val1 { nextInt64NoZero(), nextInt64() };
+		const fraction_t val2 { nextInt64NoZero(), nextInt64() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double <= val2Double ) {
+			EXPECT_LE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
+		} else if ( val2Double <= val1Double ) {
+			EXPECT_LE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction32_t val1 { nextInt32NoZero(), nextInt32() };
+		const fraction32_t val2 { nextInt32NoZero(), nextInt32() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double <= val2Double ) {
+			EXPECT_LE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
+		} else if ( val2Double <= val1Double ) {
+			EXPECT_LE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+}
+
+TEST( TEST_CASE_NAME, greaterThanOrEquals ) {
+	// First 4 bytes of MD5 hash of test name
+	constexpr seed_type seed { 0x8ea5a2e1 };
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction_t val1 { nextInt64NoZero(), nextInt64() };
+		const fraction_t val2 { nextInt64NoZero(), nextInt64() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double >= val2Double ) {
+			EXPECT_GE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
+		} else if ( val2Double >= val1Double ) {
+			EXPECT_GE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+
+	runTest( []( std::size_t caseNr ) {
+		const fraction32_t val1 { nextInt32NoZero(), nextInt32() };
+		const fraction32_t val2 { nextInt32NoZero(), nextInt32() };
+
+		const double val1Double { static_cast<double>(val1) };
+		const double val2Double { static_cast<double>(val2) };
+
+		if ( val1Double >= val2Double ) {
+			EXPECT_GE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
+		} else if ( val2Double >= val1Double ) {
+			EXPECT_GE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
+		}
+	}, seed );
+}
+

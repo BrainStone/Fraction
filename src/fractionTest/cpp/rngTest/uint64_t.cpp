@@ -24,8 +24,12 @@ TEST( TEST_CASE_NAME, lessThan ) {
 
 		if ( val1Double < val2Double ) {
 			EXPECT_LT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
 		} else if ( val2Double < val1Double ) {
 			EXPECT_LT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 
@@ -38,8 +42,12 @@ TEST( TEST_CASE_NAME, lessThan ) {
 
 		if ( val1Double < val2Double ) {
 			EXPECT_LT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
 		} else if ( val2Double < val1Double ) {
 			EXPECT_LT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 < val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 < val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 }
@@ -57,8 +65,12 @@ TEST( TEST_CASE_NAME, greaterThan ) {
 
 		if ( val1Double > val2Double ) {
 			EXPECT_GT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
 		} else if ( val2Double > val1Double ) {
 			EXPECT_GT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 
@@ -71,8 +83,12 @@ TEST( TEST_CASE_NAME, greaterThan ) {
 
 		if ( val1Double > val2Double ) {
 			EXPECT_GT( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
 		} else if ( val2Double > val1Double ) {
 			EXPECT_GT( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val1 > val1 ) << "Case: " << caseNr;
+			EXPECT_FALSE( val2 > val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 }
@@ -90,8 +106,12 @@ TEST( TEST_CASE_NAME, lessThanOrEquals ) {
 
 		if ( val1Double <= val2Double ) {
 			EXPECT_LE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
 		} else if ( val2Double <= val1Double ) {
 			EXPECT_LE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 
@@ -104,8 +124,12 @@ TEST( TEST_CASE_NAME, lessThanOrEquals ) {
 
 		if ( val1Double <= val2Double ) {
 			EXPECT_LE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
 		} else if ( val2Double <= val1Double ) {
 			EXPECT_LE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 <= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 <= val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 }
@@ -123,8 +147,12 @@ TEST( TEST_CASE_NAME, greaterThanOrEquals ) {
 
 		if ( val1Double >= val2Double ) {
 			EXPECT_GE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
 		} else if ( val2Double >= val1Double ) {
 			EXPECT_GE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 
@@ -137,8 +165,12 @@ TEST( TEST_CASE_NAME, greaterThanOrEquals ) {
 
 		if ( val1Double >= val2Double ) {
 			EXPECT_GE( val1, val2 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
 		} else if ( val2Double >= val1Double ) {
 			EXPECT_GE( val2, val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val1 >= val1 ) << "Case: " << caseNr;
+			EXPECT_TRUE( val2 >= val2 ) << "Case: " << caseNr;
 		}
 	}, seed );
 }
