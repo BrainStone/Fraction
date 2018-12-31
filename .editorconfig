@@ -1,0 +1,16 @@
+# Top-most EditorConfig file
+root = true
+
+# C++ files
+[*.{cpp,hpp,inc}]
+# Basic file settings
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+# Specify basic formatting parameters
+indent_style = space
+indent_size = 2
+
+# Add a guideline at column 120 for all C++ files
+guidelines = 120

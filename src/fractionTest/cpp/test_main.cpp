@@ -6,8 +6,8 @@
 
 #include "fraction.hpp"
 
-int main( int argc, char **argv ) {
-	::testing::FLAGS_gtest_output = "xml:gtestresults.xml";
-	::testing::InitGoogleTest( &argc, argv );
-	return RUN_ALL_TESTS();
+int main(int argc, char **argv) {
+  ::testing::FLAGS_gtest_output = "xml:gtestresults.xml";
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
